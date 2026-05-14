@@ -351,6 +351,11 @@
           grid-template-columns: repeat(2, 1fr);
         }
       }
+      @media (min-width: 1024px) {
+        .services-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
 
       .service-card {
         background: #f9fafb;
@@ -1003,42 +1008,60 @@
       <section id="services" style="padding: 8rem 0; border-top: 1px solid #e5e7eb" aria-labelledby="services-heading">
         <div class="container">
           <span class="section-label reveal" data-delay="0">Services</span>
-          <h2 id="services-heading" class="section-heading reveal" data-delay="100">We offer four main services</h2>
+          <h2 id="services-heading" class="section-heading reveal" data-delay="100">What we do</h2>
 
           <div class="services-grid">
             <div class="service-card reveal" data-delay="0">
               <span class="service-num">01</span>
-              <h3 class="service-title">Store Setup</h3>
+              <h3 class="service-title">Build &amp; Design</h3>
               <p class="service-body">
-                Custom theme setups, full store configuration, navigation, payments, shipping and policies. Homepage,
-                product and collection page design, mobile optimisation, performance tuning, and app integrations.
+                Custom store builds, theme development, UX and mobile design, performance tuning and app integrations.
+                Built to convert from day one.
+              </p>
+            </div>
+
+            <div class="service-card reveal" data-delay="50">
+              <span class="service-num">02</span>
+              <h3 class="service-title">Growth &amp; Optimisation</h3>
+              <p class="service-body">
+                CRO, speed, SEO and conversion improvements. Ongoing testing and refinement to make sure your store
+                keeps performing as you scale.
               </p>
             </div>
 
             <div class="service-card reveal" data-delay="100">
-              <span class="service-num">02</span>
-              <h3 class="service-title">Store Audit &amp; Optimisation</h3>
+              <span class="service-num">03</span>
+              <h3 class="service-title">Strategy &amp; Planning</h3>
               <p class="service-body">
-                UX and performance audits, speed, SEO and conversion improvements. Product page and checkout refinement,
-                on-page SEO and metadata.
+                Growth roadmap, channel strategy, conversion funnels and retention planning. We think commercially,
+                not just technically.
+              </p>
+            </div>
+
+            <div class="service-card reveal" data-delay="150">
+              <span class="service-num">04</span>
+              <h3 class="service-title">Ongoing Operations</h3>
+              <p class="service-body">
+                Continuous updates, proactive monitoring, technical fixes and regular performance reviews. We keep the
+                whole operation running smoothly.
               </p>
             </div>
 
             <div class="service-card reveal" data-delay="200">
-              <span class="service-num">03</span>
-              <h3 class="service-title">Ecommerce Strategy</h3>
+              <span class="service-num">05</span>
+              <h3 class="service-title">Paid Media Governance</h3>
               <p class="service-body">
-                Brand goals deep dive, growth roadmap, conversion funnels and retention planning. Tool recommendations
-                and ongoing performance reviews.
+                We don't run your campaigns — we hold your team or agency accountable for the ones they run.
+                Performance audits, spend analysis and strategic oversight so nothing gets wasted.
               </p>
             </div>
 
-            <div class="service-card reveal" data-delay="300">
-              <span class="service-num">04</span>
-              <h3 class="service-title">Website Maintenance</h3>
+            <div class="service-card reveal" data-delay="250">
+              <span class="service-num">06</span>
+              <h3 class="service-title">CRM &amp; Retention</h3>
               <p class="service-body">
-                Monthly updates, technical fixes and proactive bug monitoring. Theme updates, app installs, emergency
-                support and regular site health checks.
+                Email flows, segmentation, loyalty and lifecycle strategy. Keeping your existing customers buying is
+                just as important as acquiring new ones.
               </p>
             </div>
           </div>
