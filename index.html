@@ -360,6 +360,71 @@
         }
       }
 
+      /* ── Process steps ────────────────────────────────── */
+      .process-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        margin-top: 3.5rem;
+        border-top: 1px solid #e5e7eb;
+      }
+      @media (min-width: 640px) {
+        .process-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (min-width: 1024px) {
+        .process-grid { grid-template-columns: repeat(4, 1fr); }
+      }
+      .process-step {
+        padding: 2rem 2rem 2rem 0;
+        border-bottom: 1px solid #e5e7eb;
+        position: relative;
+      }
+      @media (min-width: 640px) {
+        /* Right-side padding on last col of each row, not needed between cols */
+        .process-step { padding-right: 2.5rem; }
+        /* Vertical divider between steps */
+        .process-step + .process-step { border-left: 1px solid #e5e7eb; padding-left: 2.5rem; }
+      }
+      @media (min-width: 1024px) {
+        .process-step { border-bottom: none; }
+        /* Re-apply for 4-col: only first col has no left border */
+        .process-step + .process-step { border-left: 1px solid #e5e7eb; }
+      }
+      /* Orange accent bar at the top of each step */
+      .process-step::before {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: 0;
+        width: 2rem;
+        height: 2px;
+        background: #ff4d00;
+      }
+      @media (min-width: 640px) {
+        .process-step + .process-step::before { left: 2.5rem; }
+      }
+      .process-num {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #ff4d00;
+        display: block;
+        margin-bottom: 1rem;
+      }
+      .process-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #0a0a0a;
+        margin-bottom: 0.625rem;
+        line-height: 1.35;
+      }
+      .process-body {
+        font-size: 0.9rem;
+        color: #6b7280;
+        line-height: 1.7;
+      }
+
       /* ── Why columns ───────────────────────────────────── */
       .why-grid {
         display: grid;
@@ -545,6 +610,7 @@
           <!-- Nav links — hidden on mobile, visible md+ -->
           <div class="hidden md:flex items-center gap-7">
             <a href="#services" class="nav-link">What we do</a>
+            <a href="#process" class="nav-link">How we work</a>
             <a href="#clients" class="nav-link">Clients</a>
             <a href="#why" class="nav-link">Who we are</a>
             <a href="#contact" class="nav-link">Contact</a>
@@ -628,6 +694,44 @@
                 support and regular site health checks.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+         PROCESS
+    ════════════════════════════════════════════════════ -->
+      <section id="process" style="padding: 8rem 0; border-top: 1px solid #e5e7eb; background: #f9fafb;" aria-labelledby="process-heading">
+        <div class="container">
+          <span class="section-label reveal" data-delay="0">Process</span>
+          <h2 id="process-heading" class="section-heading reveal" data-delay="100">How we work</h2>
+
+          <div class="process-grid">
+
+            <div class="process-step reveal" data-delay="0">
+              <span class="process-num">01</span>
+              <h3 class="process-title">Discovery Call</h3>
+              <p class="process-body">We get under the skin of your brand, your store and your goals. No assumptions — just the right questions.</p>
+            </div>
+
+            <div class="process-step reveal" data-delay="100">
+              <span class="process-num">02</span>
+              <h3 class="process-title">Strategy Proposal</h3>
+              <p class="process-body">We come back with a clear, tailored approach. What we'd do, why, and how it maps to your specific goals.</p>
+            </div>
+
+            <div class="process-step reveal" data-delay="200">
+              <span class="process-num">03</span>
+              <h3 class="process-title">Build &amp; Launch</h3>
+              <p class="process-body">We get to work. Hands-on execution from the same people you spoke to on day one — no handoffs, no surprises.</p>
+            </div>
+
+            <div class="process-step reveal" data-delay="300">
+              <span class="process-num">04</span>
+              <h3 class="process-title">Optimise &amp; Grow</h3>
+              <p class="process-body">Once live, we don't disappear. We monitor, report and continuously refine — keeping your store performing at its best.</p>
+            </div>
+
           </div>
         </div>
       </section>
