@@ -317,18 +317,7 @@
         font-weight: 800;
         line-height: 1.05;
         letter-spacing: -0.03em;
-        /* color: transparent lets background-clip: text show through */
-        color: transparent;
-        -webkit-background-clip: text;
-        background-clip: text;
-        /* Radial gradient spotlight — center tracked via JS custom props.
-           Default position -9999px keeps the gradient off-screen so text
-           appears in the far-stop colour (#0a0a0a) until the mouse enters. */
-        background-image: radial-gradient(
-          circle 190px at var(--spot-x, -9999px) var(--spot-y, -9999px),
-          #e8440a 0%,
-          #0a0a0a 50%
-        );
+        color: #0a0a0a;
         max-width: 56rem;
         margin-bottom: 1.25rem;
       }
@@ -799,10 +788,19 @@
       .hero-word {
         display: inline-block;
         transform: translateY(110%);
-        /* Spring easing: fast in, long deceleration tail.
-         Eliminates the mechanical feel of plain ease.   */
         transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
         will-change: transform;
+        /* Gradient is clipped exactly to this span's glyph outlines.
+           --spot-x/y are set relative to each span's own box by JS,
+           so a single logical spotlight works across all word spans. */
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        background-image: radial-gradient(
+          circle 200px at var(--spot-x, -9999px) var(--spot-y, -9999px),
+          #e8440a 0%,
+          #0a0a0a 100%
+        );
       }
       .hero-word.is-visible {
         transform: translateY(0);
@@ -1541,16 +1539,23 @@
 
             wrap.addEventListener("mouseleave", function () {
               wrap.style.cursor = "";
-              /* Push gradient centre off-screen so text returns to #0a0a0a */
-              h1.style.setProperty("--spot-x", "-9999px");
-              h1.style.setProperty("--spot-y", "-9999px");
+              /* Push each span's gradient centre off-screen → text returns to #0a0a0a */
+              h1.querySelectorAll(".hero-word").forEach(function (span) {
+                span.style.setProperty("--spot-x", "-9999px");
+                span.style.setProperty("--spot-y", "-9999px");
+              });
               if (dot) dot.style.opacity = "0";
             });
 
             wrap.addEventListener("mousemove", function (e) {
-              var r = h1.getBoundingClientRect();
-              h1.style.setProperty("--spot-x", (e.clientX - r.left) + "px");
-              h1.style.setProperty("--spot-y", (e.clientY - r.top)  + "px");
+              /* Compute cursor position relative to each span's own box.
+                 This maps one logical spotlight across all word spans without
+                 needing background-attachment:fixed (which breaks with transforms). */
+              h1.querySelectorAll(".hero-word").forEach(function (span) {
+                var sr = span.getBoundingClientRect();
+                span.style.setProperty("--spot-x", (e.clientX - sr.left) + "px");
+                span.style.setProperty("--spot-y", (e.clientY - sr.top)  + "px");
+              });
               if (dot) {
                 dot.style.transform = "translate(" + (e.clientX - 5) + "px," + (e.clientY - 5) + "px)";
               }
