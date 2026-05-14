@@ -167,6 +167,77 @@
         background: #e63e00;
       }
 
+      /* ── Mobile menu toggle ────────────────────────────── */
+      .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        color: #0a0a0a;
+        border-radius: 0.5rem;
+        transition: background 200ms ease;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .menu-toggle:hover { background: #f3f4f6; }
+      @media (min-width: 768px) { .menu-toggle { display: none; } }
+
+      /* ── Mobile drawer ─────────────────────────────────── */
+      .mobile-nav {
+        position: fixed;
+        inset: 0;
+        z-index: 49;
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        /* Push entirely off-screen upward; translate down to reveal */
+        transform: translateY(-100%);
+        transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: transform;
+        overflow-y: auto;
+        padding-top: 5rem; /* clears the fixed navbar */
+      }
+      .mobile-nav.is-open {
+        transform: translateY(0);
+      }
+      .mobile-nav-inner {
+        display: flex;
+        flex-direction: column;
+        padding: 2rem 1.5rem 3rem;
+        flex: 1;
+      }
+      .mobile-nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        border-top: 1px solid #e5e7eb;
+        margin-bottom: 2.5rem;
+      }
+      .mobile-nav-link {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #0a0a0a;
+        text-decoration: none;
+        padding: 1.125rem 0;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: color 200ms ease;
+        letter-spacing: -0.01em;
+      }
+      .mobile-nav-link:hover { color: #ff4d00; }
+      .mobile-nav-link svg { opacity: 0.3; transition: opacity 200ms ease, transform 200ms ease; }
+      .mobile-nav-link:hover svg { opacity: 1; transform: translateX(3px); }
+      @media (min-width: 768px) { .mobile-nav { display: none; } }
+
+      /* Prevent body scroll while drawer is open */
+      body.menu-open { overflow: hidden; }
+
       /* ── Section container ─────────────────────────────── */
       .container {
         max-width: 72rem;
@@ -727,13 +798,76 @@
             <a href="#pricing" class="nav-link">Pricing</a>
             <a href="#contact" class="nav-link">Contact</a>
           </div>
-          <!-- CTA pill — visible sm+ -->
-          <a href="#contact" class="btn btn-nav hidden sm:inline-flex" aria-label="Let's talk">
+          <!-- CTA pill — hidden on mobile (drawer has its own CTA) -->
+          <a href="#contact" class="btn btn-nav hidden md:inline-flex" aria-label="Let's talk">
             Let's talk&nbsp;&rarr;
           </a>
+          <!-- Hamburger — visible below md -->
+          <button
+            class="menu-toggle md:hidden"
+            id="menu-toggle"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            aria-controls="mobile-nav"
+          >
+            <!-- Icon swaps between ☰ and ✕ via JS -->
+            <svg id="icon-menu" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+            </svg>
+            <svg id="icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true" style="display:none">
+              <path d="M5 5l12 12M17 5L5 17" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+            </svg>
+          </button>
         </nav>
       </div>
     </header>
+
+    <!-- Mobile navigation drawer (sits below z-index 50 header, above page) -->
+    <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
+      <div class="mobile-nav-inner">
+        <ul class="mobile-nav-links" role="list">
+          <li>
+            <a href="#services" class="mobile-nav-link">
+              What we do
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="#process" class="mobile-nav-link">
+              How we work
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="#clients" class="mobile-nav-link">
+              Clients
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="#why" class="mobile-nav-link">
+              Who we are
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="#pricing" class="mobile-nav-link">
+              Pricing
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="#contact" class="mobile-nav-link">
+              Contact
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </li>
+        </ul>
+        <a href="#contact" class="btn btn-primary" style="width:100%; justify-content:center;">
+          Let's talk&nbsp;&rarr;
+        </a>
+      </div>
+    </nav>
 
     <main>
       <!-- ════════════════════════════════════════════════════
@@ -1049,6 +1183,53 @@
         "use strict";
 
         var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        /* ── Mobile menu ─────────────────────────────────────────────────── */
+        var toggle = document.getElementById("menu-toggle");
+        var mobileNav = document.getElementById("mobile-nav");
+        var iconMenu = document.getElementById("icon-menu");
+        var iconClose = document.getElementById("icon-close");
+        var mobileLinks = mobileNav ? mobileNav.querySelectorAll("a") : [];
+
+        function openMenu() {
+          mobileNav.classList.add("is-open");
+          mobileNav.setAttribute("aria-hidden", "false");
+          toggle.setAttribute("aria-expanded", "true");
+          toggle.setAttribute("aria-label", "Close navigation menu");
+          iconMenu.style.display = "none";
+          iconClose.style.display = "";
+          document.body.classList.add("menu-open");
+        }
+
+        function closeMenu() {
+          mobileNav.classList.remove("is-open");
+          mobileNav.setAttribute("aria-hidden", "true");
+          toggle.setAttribute("aria-expanded", "false");
+          toggle.setAttribute("aria-label", "Open navigation menu");
+          iconMenu.style.display = "";
+          iconClose.style.display = "none";
+          document.body.classList.remove("menu-open");
+        }
+
+        if (toggle && mobileNav) {
+          toggle.addEventListener("click", function () {
+            var isOpen = mobileNav.classList.contains("is-open");
+            isOpen ? closeMenu() : openMenu();
+          });
+
+          /* Close on any link click (anchor jump closes the drawer) */
+          mobileLinks.forEach(function (link) {
+            link.addEventListener("click", closeMenu);
+          });
+
+          /* Close on Escape key */
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && mobileNav.classList.contains("is-open")) {
+              closeMenu();
+              toggle.focus();
+            }
+          });
+        }
 
         /* ── 4. Navbar: transparent → frosted after 50px ─────────────────── */
         var header = document.querySelector(".site-header");
