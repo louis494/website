@@ -183,8 +183,14 @@
         transition: background 200ms ease;
         -webkit-tap-highlight-color: transparent;
       }
-      .menu-toggle:hover { background: #f3f4f6; }
-      @media (min-width: 768px) { .menu-toggle { display: none; } }
+      .menu-toggle:hover {
+        background: #f3f4f6;
+      }
+      @media (min-width: 768px) {
+        .menu-toggle {
+          display: none;
+        }
+      }
 
       /* ── Mobile drawer ─────────────────────────────────── */
       .mobile-nav {
@@ -230,13 +236,29 @@
         transition: color 200ms ease;
         letter-spacing: -0.01em;
       }
-      .mobile-nav-link:hover { color: #ff4d00; }
-      .mobile-nav-link svg { opacity: 0.3; transition: opacity 200ms ease, transform 200ms ease; }
-      .mobile-nav-link:hover svg { opacity: 1; transform: translateX(3px); }
-      @media (min-width: 768px) { .mobile-nav { display: none; } }
+      .mobile-nav-link:hover {
+        color: #ff4d00;
+      }
+      .mobile-nav-link svg {
+        opacity: 0.3;
+        transition:
+          opacity 200ms ease,
+          transform 200ms ease;
+      }
+      .mobile-nav-link:hover svg {
+        opacity: 1;
+        transform: translateX(3px);
+      }
+      @media (min-width: 768px) {
+        .mobile-nav {
+          display: none;
+        }
+      }
 
       /* Prevent body scroll while drawer is open */
-      body.menu-open { overflow: hidden; }
+      body.menu-open {
+        overflow: hidden;
+      }
 
       /* ── Section container ─────────────────────────────── */
       .container {
@@ -440,10 +462,14 @@
         border-top: 1px solid #e5e7eb;
       }
       @media (min-width: 640px) {
-        .process-grid { grid-template-columns: repeat(2, 1fr); }
+        .process-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
       }
       @media (min-width: 1024px) {
-        .process-grid { grid-template-columns: repeat(4, 1fr); }
+        .process-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
       }
       .process-step {
         padding: 2rem 2rem 2rem 0;
@@ -452,18 +478,27 @@
       }
       @media (min-width: 640px) {
         /* Right-side padding on last col of each row, not needed between cols */
-        .process-step { padding-right: 2.5rem; }
+        .process-step {
+          padding-right: 2.5rem;
+        }
         /* Vertical divider between steps */
-        .process-step + .process-step { border-left: 1px solid #e5e7eb; padding-left: 2.5rem; }
+        .process-step + .process-step {
+          border-left: 1px solid #e5e7eb;
+          padding-left: 2.5rem;
+        }
       }
       @media (min-width: 1024px) {
-        .process-step { border-bottom: none; }
+        .process-step {
+          border-bottom: none;
+        }
         /* Re-apply for 4-col: only first col has no left border */
-        .process-step + .process-step { border-left: 1px solid #e5e7eb; }
+        .process-step + .process-step {
+          border-left: 1px solid #e5e7eb;
+        }
       }
       /* Orange accent bar at the top of each step */
       .process-step::before {
-        content: '';
+        content: "";
         position: absolute;
         top: -1px;
         left: 0;
@@ -472,7 +507,9 @@
         background: #ff4d00;
       }
       @media (min-width: 640px) {
-        .process-step + .process-step::before { left: 2.5rem; }
+        .process-step + .process-step::before {
+          left: 2.5rem;
+        }
       }
       .process-num {
         font-size: 0.7rem;
@@ -545,15 +582,23 @@
         gap: 3rem;
       }
       @media (min-width: 768px) {
-        .pricing-card { grid-template-columns: 1fr 1fr; gap: 0; }
+        .pricing-card {
+          grid-template-columns: 1fr 1fr;
+          gap: 0;
+        }
       }
-      .pricing-left { display: flex; flex-direction: column; }
+      .pricing-left {
+        display: flex;
+        flex-direction: column;
+      }
       .pricing-right {
         display: flex;
         flex-direction: column;
       }
       @media (min-width: 768px) {
-        .pricing-left { padding-right: 3.5rem; }
+        .pricing-left {
+          padding-right: 3.5rem;
+        }
         .pricing-right {
           border-left: 1px solid #e5e7eb;
           padding-left: 3.5rem;
@@ -625,7 +670,10 @@
         color: #0a0a0a;
         line-height: 1.5;
       }
-      .pricing-list li svg { flex-shrink: 0; margin-top: 0.1em; }
+      .pricing-list li svg {
+        flex-shrink: 0;
+        margin-top: 0.1em;
+      }
       .pricing-catch {
         padding-top: 1.75rem;
         border-top: 1px solid #e5e7eb;
@@ -642,7 +690,9 @@
         color: #6b7280;
         line-height: 1.7;
       }
-      .pricing-catch-body + .pricing-catch-body { margin-top: 0.625rem; }
+      .pricing-catch-body + .pricing-catch-body {
+        margin-top: 0.625rem;
+      }
 
       /* ── Contact section ───────────────────────────────── */
       .contact-section {
@@ -812,10 +862,18 @@
           >
             <!-- Icon swaps between ☰ and ✕ via JS -->
             <svg id="icon-menu" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-              <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+              <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
             </svg>
-            <svg id="icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true" style="display:none">
-              <path d="M5 5l12 12M17 5L5 17" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+            <svg
+              id="icon-close"
+              width="22"
+              height="22"
+              viewBox="0 0 22 22"
+              fill="none"
+              aria-hidden="true"
+              style="display: none"
+            >
+              <path d="M5 5l12 12M17 5L5 17" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
             </svg>
           </button>
         </nav>
@@ -829,41 +887,89 @@
           <li>
             <a href="#services" class="mobile-nav-link">
               What we do
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path
+                  d="M3 8h10M9 4l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </a>
           </li>
           <li>
             <a href="#process" class="mobile-nav-link">
               How we work
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path
+                  d="M3 8h10M9 4l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </a>
           </li>
           <li>
             <a href="#clients" class="mobile-nav-link">
               Clients
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path
+                  d="M3 8h10M9 4l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </a>
           </li>
           <li>
             <a href="#why" class="mobile-nav-link">
               Who we are
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path
+                  d="M3 8h10M9 4l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </a>
           </li>
           <li>
             <a href="#pricing" class="mobile-nav-link">
               Pricing
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path
+                  d="M3 8h10M9 4l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </a>
           </li>
           <li>
             <a href="#contact" class="mobile-nav-link">
               Contact
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path
+                  d="M3 8h10M9 4l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </a>
           </li>
         </ul>
-        <a href="#contact" class="btn btn-primary" style="width:100%; justify-content:center;">
+        <a href="#contact" class="btn btn-primary" style="width: 100%; justify-content: center">
           Let's talk&nbsp;&rarr;
         </a>
       </div>
@@ -881,7 +987,7 @@
               <span class="section-label" style="margin-bottom: 0">Octane 99</span>
             </div>
 
-            <h1 class="hero-headline">The Shopify Plus agency for emerging brands.</h1>
+            <h1 class="hero-headline">The ecommerce team you never have to hire.</h1>
 
             <p class="hero-subline hero-after">Built to perform. Optimised to scale.</p>
 
@@ -947,37 +1053,50 @@
       <!-- ════════════════════════════════════════════════════
          PROCESS
     ════════════════════════════════════════════════════ -->
-      <section id="process" style="padding: 8rem 0; border-top: 1px solid #e5e7eb; background: #f9fafb;" aria-labelledby="process-heading">
+      <section
+        id="process"
+        style="padding: 8rem 0; border-top: 1px solid #e5e7eb; background: #f9fafb"
+        aria-labelledby="process-heading"
+      >
         <div class="container">
           <span class="section-label reveal" data-delay="0">Process</span>
           <h2 id="process-heading" class="section-heading reveal" data-delay="100">How we work</h2>
 
           <div class="process-grid">
-
             <div class="process-step reveal" data-delay="0">
               <span class="process-num">01</span>
               <h3 class="process-title">Discovery Call</h3>
-              <p class="process-body">We get under the skin of your brand, your store and your goals. No assumptions — just the right questions.</p>
+              <p class="process-body">
+                We get under the skin of your brand, your store and your goals. No assumptions — just the right
+                questions.
+              </p>
             </div>
 
             <div class="process-step reveal" data-delay="100">
               <span class="process-num">02</span>
               <h3 class="process-title">Strategy Proposal</h3>
-              <p class="process-body">We come back with a clear, tailored approach. What we'd do, why, and how it maps to your specific goals.</p>
+              <p class="process-body">
+                We come back with a clear, tailored approach. What we'd do, why, and how it maps to your specific goals.
+              </p>
             </div>
 
             <div class="process-step reveal" data-delay="200">
               <span class="process-num">03</span>
               <h3 class="process-title">Build &amp; Launch</h3>
-              <p class="process-body">We get to work. Hands-on execution from the same people you spoke to on day one — no handoffs, no surprises.</p>
+              <p class="process-body">
+                We get to work. Hands-on execution from the same people you spoke to on day one — no handoffs, no
+                surprises.
+              </p>
             </div>
 
             <div class="process-step reveal" data-delay="300">
               <span class="process-num">04</span>
               <h3 class="process-title">Optimise &amp; Grow</h3>
-              <p class="process-body">Once live, we don't disappear. We monitor, report and continuously refine — keeping your store performing at its best.</p>
+              <p class="process-body">
+                Once live, we don't disappear. We monitor, report and continuously refine — keeping your store
+                performing at its best.
+              </p>
             </div>
-
           </div>
         </div>
       </section>
@@ -1108,7 +1227,7 @@
       <!-- ════════════════════════════════════════════════════
          PRICING
     ════════════════════════════════════════════════════ -->
-      <section id="pricing" style="padding: 8rem 0; border-top: 1px solid #e5e7eb;" aria-labelledby="pricing-heading">
+      <section id="pricing" style="padding: 8rem 0; border-top: 1px solid #e5e7eb" aria-labelledby="pricing-heading">
         <div class="container">
           <span class="section-label reveal" data-delay="0">Pricing</span>
           <h2 id="pricing-heading" class="section-heading reveal" data-delay="100">Simple, transparent pricing</h2>
@@ -1116,46 +1235,79 @@
             <div class="pricing-left">
               <p class="pricing-plan">Monthly Retainer</p>
               <p class="pricing-price"><sup>£</sup>3,500<span class="per">/mo</span></p>
-              <p class="pricing-tagline">One flat fee. One task in flight at a time. No hidden costs, no scope creep, no surprises.</p>
-              <p class="pricing-sub">You submit a task, we get to work. When it's done, the next one moves up. Simple as that.</p>
-              <a href="#contact" class="btn btn-primary" style="align-self: flex-start;">Get started &rarr;</a>
+              <p class="pricing-tagline">
+                One flat fee. One task in flight at a time. No hidden costs, no scope creep, no surprises.
+              </p>
+              <p class="pricing-sub">
+                You submit a task, we get to work. When it's done, the next one moves up. Simple as that.
+              </p>
+              <a href="#contact" class="btn btn-primary" style="align-self: flex-start">Get started &rarr;</a>
             </div>
             <div class="pricing-right">
               <p class="pricing-includes-label">What's included</p>
               <ul class="pricing-list">
                 <li>
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                    <circle cx="8" cy="8" r="7.5" stroke="#e5e7eb"/>
-                    <path d="M5 8.5l2 2 4-4" stroke="#ff4d00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="8" cy="8" r="7.5" stroke="#e5e7eb" />
+                    <path
+                      d="M5 8.5l2 2 4-4"
+                      stroke="#ff4d00"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
                   </svg>
                   Unlimited task submissions
                 </li>
                 <li>
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                    <circle cx="8" cy="8" r="7.5" stroke="#e5e7eb"/>
-                    <path d="M5 8.5l2 2 4-4" stroke="#ff4d00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="8" cy="8" r="7.5" stroke="#e5e7eb" />
+                    <path
+                      d="M5 8.5l2 2 4-4"
+                      stroke="#ff4d00"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
                   </svg>
                   Direct access to senior Shopify Plus expertise
                 </li>
                 <li>
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                    <circle cx="8" cy="8" r="7.5" stroke="#e5e7eb"/>
-                    <path d="M5 8.5l2 2 4-4" stroke="#ff4d00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="8" cy="8" r="7.5" stroke="#e5e7eb" />
+                    <path
+                      d="M5 8.5l2 2 4-4"
+                      stroke="#ff4d00"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
                   </svg>
                   Strategy, design, build and optimisation — all in scope
                 </li>
                 <li>
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                    <circle cx="8" cy="8" r="7.5" stroke="#e5e7eb"/>
-                    <path d="M5 8.5l2 2 4-4" stroke="#ff4d00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="8" cy="8" r="7.5" stroke="#e5e7eb" />
+                    <path
+                      d="M5 8.5l2 2 4-4"
+                      stroke="#ff4d00"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
                   </svg>
                   Pause or cancel anytime
                 </li>
               </ul>
               <div class="pricing-catch">
                 <p class="pricing-catch-title">What's the catch?</p>
-                <p class="pricing-catch-body">Honestly? Just one. We work through tasks sequentially — one at a time. That's what keeps the quality high and the communication clear.</p>
-                <p class="pricing-catch-body">If you need multiple workstreams running in parallel, get in touch and we'll talk through options.</p>
+                <p class="pricing-catch-body">
+                  Honestly? Just one. We work through tasks sequentially — one at a time. That's what keeps the quality
+                  high and the communication clear.
+                </p>
+                <p class="pricing-catch-body">
+                  If you need multiple workstreams running in parallel, get in touch and we'll talk through options.
+                </p>
               </div>
             </div>
           </div>
