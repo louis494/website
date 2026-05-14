@@ -422,24 +422,33 @@
         <span class="section-label reveal" data-delay="0">Clients</span>
         <h2 id="clients-heading" class="section-heading reveal" data-delay="100">Brands we work with</h2>
 
-        <div class="logo-row reveal" style="margin-top: 3.5rem;" data-delay="200" id="logo-row" role="list" aria-label="Client logos"></div>
+        <div class="logo-row reveal" style="margin-top: 3.5rem;" data-delay="200" role="list" aria-label="Client logos">
 
-        <script>
-          (function () {
-            var labels = ['Brand 01','Brand 02','Brand 03','Brand 04','Brand 05','Brand 06','Brand 07','Brand 08'];
-            var row = document.getElementById('logo-row');
-            labels.forEach(function (label) {
-              var el = document.createElement('div');
-              el.className = 'brand-item';
-              el.setAttribute('role', 'listitem');
-              el.setAttribute('aria-label', label);
-              /* Swap inner span for real logo:
-                 <img src="/assets/images/brand-logos/name.png" alt="Brand name" /> */
-              el.innerHTML = '<span>' + label + '</span>';
-              row.appendChild(el);
-            });
-          }());
-        </script>
+          <div class="brand-item" role="listitem">
+            <img src="assets/4-lyma-logo-final_avmugg.png" alt="4 Lyma" />
+          </div>
+
+          <div class="brand-item" role="listitem">
+            <img src="assets/Atonyx_Logo_Black.png" alt="Atonyx" />
+          </div>
+
+          <div class="brand-item" role="listitem">
+            <img src="assets/Over_Above_logo.png" alt="Over Above" />
+          </div>
+
+          <div class="brand-item" role="listitem">
+            <img src="assets/Runlimited_Logo.png" alt="Runlimited" />
+          </div>
+
+          <div class="brand-item" role="listitem">
+            <img src="assets/Smokey_Topaz_YB-Logo-2025.png" alt="Smokey Topaz" />
+          </div>
+
+          <div class="brand-item" role="listitem">
+            <img src="assets/Wit_Master_Logo_Black.png" alt="Wit Master" />
+          </div>
+
+        </div>
 
       </div>
     </section>
