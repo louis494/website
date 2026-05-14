@@ -462,6 +462,117 @@
         margin-top: 0.5rem;
       }
 
+      /* ── Pricing ───────────────────────────────────────── */
+      .pricing-card {
+        margin-top: 3.5rem;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 3rem;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      @media (min-width: 768px) {
+        .pricing-card { grid-template-columns: 1fr 1fr; gap: 0; }
+      }
+      .pricing-left { display: flex; flex-direction: column; }
+      .pricing-right {
+        display: flex;
+        flex-direction: column;
+      }
+      @media (min-width: 768px) {
+        .pricing-left { padding-right: 3.5rem; }
+        .pricing-right {
+          border-left: 1px solid #e5e7eb;
+          padding-left: 3.5rem;
+        }
+      }
+      .pricing-plan {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #ff4d00;
+        margin-bottom: 1rem;
+      }
+      .pricing-price {
+        font-size: clamp(3rem, 5vw, 4rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: #0a0a0a;
+        line-height: 1;
+        margin-bottom: 1.5rem;
+      }
+      .pricing-price sup {
+        font-size: 0.45em;
+        font-weight: 700;
+        vertical-align: super;
+        letter-spacing: 0;
+      }
+      .pricing-price .per {
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: #6b7280;
+        letter-spacing: 0;
+      }
+      .pricing-tagline {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: #0a0a0a;
+        line-height: 1.6;
+        margin-bottom: 0.625rem;
+      }
+      .pricing-sub {
+        font-size: 0.9rem;
+        color: #6b7280;
+        line-height: 1.7;
+        flex: 1;
+        margin-bottom: 2rem;
+      }
+      .pricing-includes-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #0a0a0a;
+        margin-bottom: 1.25rem;
+      }
+      .pricing-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 2.25rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.875rem;
+      }
+      .pricing-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.625rem;
+        font-size: 0.9rem;
+        color: #0a0a0a;
+        line-height: 1.5;
+      }
+      .pricing-list li svg { flex-shrink: 0; margin-top: 0.1em; }
+      .pricing-catch {
+        padding-top: 1.75rem;
+        border-top: 1px solid #e5e7eb;
+        flex: 1;
+      }
+      .pricing-catch-title {
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: #0a0a0a;
+        margin-bottom: 0.5rem;
+      }
+      .pricing-catch-body {
+        font-size: 0.875rem;
+        color: #6b7280;
+        line-height: 1.7;
+      }
+      .pricing-catch-body + .pricing-catch-body { margin-top: 0.625rem; }
+
       /* ── Contact section ───────────────────────────────── */
       .contact-section {
         background: #0a0a0a;
@@ -613,6 +724,7 @@
             <a href="#process" class="nav-link">How we work</a>
             <a href="#clients" class="nav-link">Clients</a>
             <a href="#why" class="nav-link">Who we are</a>
+            <a href="#pricing" class="nav-link">Pricing</a>
             <a href="#contact" class="nav-link">Contact</a>
           </div>
           <!-- CTA pill — visible sm+ -->
@@ -830,6 +942,63 @@
                 just launching or already doing serious volume, gets senior-level thinking and hands-on work, every
                 time.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════
+         PRICING
+    ════════════════════════════════════════════════════ -->
+      <section id="pricing" style="padding: 8rem 0; border-top: 1px solid #e5e7eb;" aria-labelledby="pricing-heading">
+        <div class="container">
+          <span class="section-label reveal" data-delay="0">Pricing</span>
+          <h2 id="pricing-heading" class="section-heading reveal" data-delay="100">Simple, transparent pricing</h2>
+          <div class="pricing-card reveal" data-delay="200">
+            <div class="pricing-left">
+              <p class="pricing-plan">Monthly Retainer</p>
+              <p class="pricing-price"><sup>£</sup>3,500<span class="per">/mo</span></p>
+              <p class="pricing-tagline">One flat fee. One task in flight at a time. No hidden costs, no scope creep, no surprises.</p>
+              <p class="pricing-sub">You submit a task, we get to work. When it's done, the next one moves up. Simple as that.</p>
+              <a href="#contact" class="btn btn-primary" style="align-self: flex-start;">Get started &rarr;</a>
+            </div>
+            <div class="pricing-right">
+              <p class="pricing-includes-label">What's included</p>
+              <ul class="pricing-list">
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <circle cx="8" cy="8" r="7.5" stroke="#e5e7eb"/>
+                    <path d="M5 8.5l2 2 4-4" stroke="#ff4d00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Unlimited task submissions
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <circle cx="8" cy="8" r="7.5" stroke="#e5e7eb"/>
+                    <path d="M5 8.5l2 2 4-4" stroke="#ff4d00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Direct access to senior Shopify Plus expertise
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <circle cx="8" cy="8" r="7.5" stroke="#e5e7eb"/>
+                    <path d="M5 8.5l2 2 4-4" stroke="#ff4d00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Strategy, design, build and optimisation — all in scope
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <circle cx="8" cy="8" r="7.5" stroke="#e5e7eb"/>
+                    <path d="M5 8.5l2 2 4-4" stroke="#ff4d00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Pause or cancel anytime
+                </li>
+              </ul>
+              <div class="pricing-catch">
+                <p class="pricing-catch-title">What's the catch?</p>
+                <p class="pricing-catch-body">Honestly? Just one. We work through tasks sequentially — one at a time. That's what keeps the quality high and the communication clear.</p>
+                <p class="pricing-catch-body">If you need multiple workstreams running in parallel, get in touch and we'll talk through options.</p>
+              </div>
             </div>
           </div>
         </div>
