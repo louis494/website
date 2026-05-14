@@ -317,7 +317,18 @@
         font-weight: 800;
         line-height: 1.05;
         letter-spacing: -0.03em;
-        color: #0a0a0a;
+        /* color: transparent lets background-clip: text show through */
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        /* Radial gradient spotlight — center tracked via JS custom props.
+           Default position -9999px keeps the gradient off-screen so text
+           appears in the far-stop colour (#0a0a0a) until the mouse enters. */
+        background-image: radial-gradient(
+          circle 190px at var(--spot-x, -9999px) var(--spot-y, -9999px),
+          #e8440a 0%,
+          #0a0a0a 50%
+        );
         max-width: 56rem;
         margin-bottom: 1.25rem;
       }
@@ -819,16 +830,9 @@
         box-shadow: none !important;
       }
 
-      /* ── Hero spotlight canvas ─────────────────────────── */
+      /* ── Hero spotlight ────────────────────────────────── */
       .hero-headline-wrap {
         position: relative;
-        display: block;
-      }
-      #hero-spotlight {
-        position: absolute;
-        top: 0;
-        left: 0;
-        pointer-events: none;
         display: block;
       }
       .hero-headline-wrap:hover {
@@ -1025,7 +1029,6 @@
 
             <div class="hero-headline-wrap">
               <h1 class="hero-headline">The ecommerce team you never have to hire.</h1>
-              <canvas id="hero-spotlight" aria-hidden="true"></canvas>
             </div>
 
             <p class="hero-subline hero-after">Full coverage. Total continuity.</p>
@@ -1523,92 +1526,35 @@
             );
           });
 
-          /* ── Hero spotlight (mouse on desktop, gyro/sweep on mobile) ──────── */
-          var spotCanvas = document.getElementById("hero-spotlight");
-          var dot        = document.getElementById("cursor-dot");
+          /* ── Hero spotlight: CSS background-clip:text + radial gradient ──── */
+          /* The browser's own font renderer clips the gradient exactly to the
+             glyph outlines — no canvas text rendering, no colour bleed.      */
+          var dot      = document.getElementById("cursor-dot");
+          var wrap     = h1.closest(".hero-headline-wrap");
+          var isMobile = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 
-          if (spotCanvas) {
-            var sCtx  = spotCanvas.getContext("2d");
-            var dpr   = window.devicePixelRatio || 1;
-            var SPOT_R = 160;
-            var cssW = 0, cssH = 0;
+          if (!isMobile && wrap) {
+            wrap.addEventListener("mouseenter", function () {
+              wrap.style.cursor = "none";
+              if (dot) dot.style.opacity = "1";
+            });
 
-            /* Size canvas to h1 dimensions, apply DPR scale */
-            function sizeSpot() {
+            wrap.addEventListener("mouseleave", function () {
+              wrap.style.cursor = "";
+              /* Push gradient centre off-screen so text returns to #0a0a0a */
+              h1.style.setProperty("--spot-x", "-9999px");
+              h1.style.setProperty("--spot-y", "-9999px");
+              if (dot) dot.style.opacity = "0";
+            });
+
+            wrap.addEventListener("mousemove", function (e) {
               var r = h1.getBoundingClientRect();
-              cssW = r.width;
-              cssH = r.height;
-              spotCanvas.style.width  = cssW + "px";
-              spotCanvas.style.height = cssH + "px";
-              spotCanvas.width  = Math.round(cssW * dpr);
-              spotCanvas.height = Math.round(cssH * dpr);
-              sCtx.scale(dpr, dpr); /* canvas.width reset clears state; re-apply */
-            }
-            sizeSpot();
-
-            var resizeTimer;
-            window.addEventListener("resize", function () {
-              clearTimeout(resizeTimer);
-              resizeTimer = setTimeout(sizeSpot, 120);
-            }, { passive: true });
-
-            /* Core draw — accepts viewport coords, composites orange text
-               source-atop a radial gradient so only the lit region shows */
-            function drawSpot(vx, vy) {
-              var cr = spotCanvas.getBoundingClientRect();
-              var cx = vx - cr.left;
-              var cy = vy - cr.top;
-
-              sCtx.clearRect(0, 0, cssW, cssH);
-
-              var grad = sCtx.createRadialGradient(cx, cy, 0, cx, cy, SPOT_R);
-              grad.addColorStop(0,    "rgba(255,255,255,1)");
-              grad.addColorStop(0.55, "rgba(255,255,255,0.9)");
-              grad.addColorStop(1,    "rgba(255,255,255,0)");
-              sCtx.fillStyle = grad;
-              sCtx.fillRect(0, 0, cssW, cssH);
-
-              sCtx.globalCompositeOperation = "source-atop";
-              sCtx.fillStyle = "#e8440a";
-
-              var cs       = window.getComputedStyle(h1);
-              var fontSize = parseFloat(cs.fontSize);
-              sCtx.font        = cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily;
-              sCtx.textBaseline = "top";
-
-              h1.querySelectorAll(".hero-word").forEach(function (span) {
-                var sr       = span.getBoundingClientRect();
-                var halfLead = (sr.height - fontSize) / 2;
-                sCtx.fillText(span.textContent, sr.left - cr.left, sr.top - cr.top + halfLead);
-              });
-
-              sCtx.globalCompositeOperation = "source-over";
-            }
-
-            var wrap     = h1.closest(".hero-headline-wrap");
-            var isMobile = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-
-            /* ── Desktop: mouse-driven spotlight ──────────────────────────── */
-            if (!isMobile) {
-
-              wrap.addEventListener("mouseenter", function () {
-                wrap.style.cursor = "none";
-                if (dot) dot.style.opacity = "1";
-              });
-              wrap.addEventListener("mouseleave", function () {
-                wrap.style.cursor = "";
-                sCtx.clearRect(0, 0, cssW, cssH);
-                if (dot) dot.style.opacity = "0";
-              });
-              wrap.addEventListener("mousemove", function (e) {
-                drawSpot(e.clientX, e.clientY);
-                if (dot) {
-                  dot.style.transform = "translate(" + (e.clientX - 5) + "px," + (e.clientY - 5) + "px)";
-                }
-              });
-
-            /* Mobile: no spotlight effect */
-            }
+              h1.style.setProperty("--spot-x", (e.clientX - r.left) + "px");
+              h1.style.setProperty("--spot-y", (e.clientY - r.top)  + "px");
+              if (dot) {
+                dot.style.transform = "translate(" + (e.clientX - 5) + "px," + (e.clientY - 5) + "px)";
+              }
+            });
           }
         }
 
