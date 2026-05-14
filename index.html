@@ -1607,123 +1607,30 @@
                 }
               });
 
-            /* ── Mobile: gyroscope or scroll-sweep fallback ───────────────── */
+            /* ── Mobile: left-to-right orange sweep on load ──────────────────── */
             } else {
 
-              /* Lerp targets — start centred */
-              var gTgtX = 0, gTgtY = 0, gCurX = 0, gCurY = 0;
-              var gyroActive = false, gyroRafId = null;
+              var SWEEP_DUR = 1400;
+              var sweepDelay = afterStart + Math.round(WORD_DUR * 0.3) + 250;
 
-              function initGyroState() {
-                gTgtX = gCurX = cssW / 2;
-                gTgtY = gCurY = cssH / 2;
-              }
-              initGyroState();
+              setTimeout(function () {
+                var t0 = null;
 
-              /* deviceorientation handler: maps beta/gamma → canvas coords.
-                 gamma: left-right tilt  (-35..+35 → full width)
-                 beta:  front-back tilt  (20..70° → full height, portrait hold) */
-              function onOrientation(e) {
-                if (e.gamma === null || e.beta === null) return;
-                var g = Math.max(-35, Math.min(35, e.gamma));
-                var b = Math.max(20,  Math.min(70, e.beta));
-                gTgtX = ((g + 35) / 70) * cssW;
-                gTgtY = ((b - 20) / 50) * cssH;
-              }
-
-              /* RAF loop: lerp current → target, redraw each frame */
-              function gyroLoop() {
-                if (!gyroActive) return;
-                gCurX += (gTgtX - gCurX) * 0.07;
-                gCurY += (gTgtY - gCurY) * 0.07;
-                var cr = spotCanvas.getBoundingClientRect();
-                drawSpot(cr.left + gCurX, cr.top + gCurY);
-                gyroRafId = requestAnimationFrame(gyroLoop);
-              }
-
-              function stopGyro() {
-                gyroActive = false;
-                window.removeEventListener("deviceorientation", onOrientation);
-                if (gyroRafId) { cancelAnimationFrame(gyroRafId); gyroRafId = null; }
-                sCtx.clearRect(0, 0, cssW, cssH);
-              }
-
-              function startGyro() {
-                initGyroState();
-                gyroActive = true;
-                var gotRealEvent = false;
-
-                /* Track whether events carry real data (rules out desktop browsers
-                   that fire DeviceOrientationEvent with all-null values) */
-                function firstCheck(e) {
-                  if (e.gamma !== null && e.beta !== null) {
-                    gotRealEvent = true;
-                    window.removeEventListener("deviceorientation", firstCheck);
+                function sweepFrame(ts) {
+                  if (!t0) t0 = ts;
+                  var p = Math.min((ts - t0) / SWEEP_DUR, 1);
+                  var e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+                  var cx = -SPOT_R + e * (cssW + SPOT_R * 2);
+                  var cr = spotCanvas.getBoundingClientRect();
+                  drawSpot(cr.left + cx, cr.top + cssH * 0.45);
+                  if (p < 1) {
+                    requestAnimationFrame(sweepFrame);
+                  } else {
+                    setTimeout(function () { sCtx.clearRect(0, 0, cssW, cssH); }, 400);
                   }
                 }
-                window.addEventListener("deviceorientation", firstCheck,    { passive: true });
-                window.addEventListener("deviceorientation", onOrientation, { passive: true });
-                gyroLoop();
-
-                /* 2 s timeout: if no real data arrived, fall back to sweep */
-                setTimeout(function () {
-                  if (!gotRealEvent) { stopGyro(); startSweep(); }
-                }, 2000);
-              }
-
-              /* Scroll-reveal fallback: left-to-right orange sweep, plays once
-                 after the word-reveal animation has fully settled */
-              function startSweep() {
-                var SWEEP_DUR = 1400;
-                var sweepDelay = afterStart + Math.round(WORD_DUR * 0.3) + 250;
-
-                setTimeout(function () {
-                  var t0 = null;
-
-                  function sweepFrame(ts) {
-                    if (!t0) t0 = ts;
-                    var p = Math.min((ts - t0) / SWEEP_DUR, 1);
-                    /* ease-in-out-quad */
-                    var e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-                    var cx = -SPOT_R + e * (cssW + SPOT_R * 2);
-                    var cr = spotCanvas.getBoundingClientRect();
-                    drawSpot(cr.left + cx, cr.top + cssH * 0.45);
-                    if (p < 1) {
-                      requestAnimationFrame(sweepFrame);
-                    } else {
-                      /* Hold briefly then clear back to black */
-                      setTimeout(function () { sCtx.clearRect(0, 0, cssW, cssH); }, 400);
-                    }
-                  }
-                  requestAnimationFrame(sweepFrame);
-                }, sweepDelay);
-              }
-
-              /* iOS 13+ gate: requestPermission must be called from a tap */
-              var needsPermission = (typeof DeviceOrientationEvent !== "undefined") &&
-                                    (typeof DeviceOrientationEvent.requestPermission === "function");
-              var hasOrientationAPI = typeof DeviceOrientationEvent !== "undefined";
-
-              if (!hasOrientationAPI) {
-                /* No API at all (rare) → sweep */
-                startSweep();
-
-              } else if (needsPermission) {
-                /* iOS 13+: request permission silently on first touch of the
-                   headline — touchstart is a valid user gesture for this API */
-                wrap.addEventListener("touchstart", function () {
-                  DeviceOrientationEvent.requestPermission()
-                    .then(function (state) {
-                      if (state === "granted") { startGyro(); }
-                      else { startSweep(); }
-                    })
-                    .catch(function () { startSweep(); });
-                }, { once: true, passive: true });
-
-              } else {
-                /* Android / non-restricted environments — start immediately */
-                startGyro();
-              }
+                requestAnimationFrame(sweepFrame);
+              }, sweepDelay);
             }
           }
         }
