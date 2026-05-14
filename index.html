@@ -852,6 +852,30 @@
         #cursor-dot { display: none; }
         .hero-headline-wrap:hover { cursor: auto; }
       }
+      #tilt-prompt {
+        position: absolute;
+        bottom: -2.25rem;
+        left: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #e8440a;
+        background: none;
+        border: none;
+        padding: 0.375rem 0;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: opacity 200ms ease;
+        -webkit-tap-highlight-color: transparent;
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      #tilt-prompt:hover,
+      #tilt-prompt:focus-visible { opacity: 1; }
+      @media (min-width: 768px) { #tilt-prompt { display: none !important; } }
 
       /* ── Reduced motion: reveal everything immediately ─── */
       @media (prefers-reduced-motion: reduce) {
@@ -1523,25 +1547,26 @@
             );
           });
 
-          /* ── Hero spotlight: reveals headline in orange under cursor ──────── */
+          /* ── Hero spotlight (mouse on desktop, gyro/sweep on mobile) ──────── */
           var spotCanvas = document.getElementById("hero-spotlight");
-          var dot = document.getElementById("cursor-dot");
+          var dot        = document.getElementById("cursor-dot");
 
           if (spotCanvas) {
-            var sCtx = spotCanvas.getContext("2d");
-            var dpr = window.devicePixelRatio || 1;
-            var SPOT_R = 160; // spotlight radius in CSS px
+            var sCtx  = spotCanvas.getContext("2d");
+            var dpr   = window.devicePixelRatio || 1;
+            var SPOT_R = 160;
             var cssW = 0, cssH = 0;
 
+            /* Size canvas to h1 dimensions, apply DPR scale */
             function sizeSpot() {
               var r = h1.getBoundingClientRect();
               cssW = r.width;
               cssH = r.height;
-              spotCanvas.style.width = cssW + "px";
+              spotCanvas.style.width  = cssW + "px";
               spotCanvas.style.height = cssH + "px";
-              spotCanvas.width = Math.round(cssW * dpr);
+              spotCanvas.width  = Math.round(cssW * dpr);
               spotCanvas.height = Math.round(cssH * dpr);
-              sCtx.scale(dpr, dpr);
+              sCtx.scale(dpr, dpr); /* canvas.width reset clears state; re-apply */
             }
             sizeSpot();
 
@@ -1551,65 +1576,191 @@
               resizeTimer = setTimeout(sizeSpot, 120);
             }, { passive: true });
 
-            function drawSpot(mouseX, mouseY) {
+            /* Core draw — accepts viewport coords, composites orange text
+               source-atop a radial gradient so only the lit region shows */
+            function drawSpot(vx, vy) {
               var cr = spotCanvas.getBoundingClientRect();
-              var cx = mouseX - cr.left;
-              var cy = mouseY - cr.top;
+              var cx = vx - cr.left;
+              var cy = vy - cr.top;
 
               sCtx.clearRect(0, 0, cssW, cssH);
 
-              /* Step 1: paint radial gradient as the destination */
               var grad = sCtx.createRadialGradient(cx, cy, 0, cx, cy, SPOT_R);
-              grad.addColorStop(0,   "rgba(255,255,255,1)");
-              grad.addColorStop(0.55,"rgba(255,255,255,0.9)");
-              grad.addColorStop(1,   "rgba(255,255,255,0)");
+              grad.addColorStop(0,    "rgba(255,255,255,1)");
+              grad.addColorStop(0.55, "rgba(255,255,255,0.9)");
+              grad.addColorStop(1,    "rgba(255,255,255,0)");
               sCtx.fillStyle = grad;
               sCtx.fillRect(0, 0, cssW, cssH);
 
-              /* Step 2: draw orange text source-atop — visible only where
-                 the gradient is opaque, giving the spotlight colour effect */
               sCtx.globalCompositeOperation = "source-atop";
               sCtx.fillStyle = "#e8440a";
 
-              var cs = window.getComputedStyle(h1);
+              var cs       = window.getComputedStyle(h1);
               var fontSize = parseFloat(cs.fontSize);
-              sCtx.font = cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily;
+              sCtx.font        = cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily;
               sCtx.textBaseline = "top";
 
               h1.querySelectorAll(".hero-word").forEach(function (span) {
-                var sr = span.getBoundingClientRect();
-                /* Remove half-leading so canvas text aligns with rendered glyphs */
+                var sr       = span.getBoundingClientRect();
                 var halfLead = (sr.height - fontSize) / 2;
-                sCtx.fillText(
-                  span.textContent,
-                  sr.left - cr.left,
-                  sr.top  - cr.top + halfLead
-                );
+                sCtx.fillText(span.textContent, sr.left - cr.left, sr.top - cr.top + halfLead);
               });
 
               sCtx.globalCompositeOperation = "source-over";
             }
 
-            var wrap = h1.closest(".hero-headline-wrap");
+            var wrap     = h1.closest(".hero-headline-wrap");
+            var isMobile = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 
-            wrap.addEventListener("mouseenter", function () {
-              wrap.style.cursor = "none";
-              if (dot) dot.style.opacity = "1";
-            });
+            /* ── Desktop: mouse-driven spotlight ──────────────────────────── */
+            if (!isMobile) {
 
-            wrap.addEventListener("mouseleave", function () {
-              wrap.style.cursor = "";
-              sCtx.clearRect(0, 0, cssW, cssH);
-              if (dot) dot.style.opacity = "0";
-            });
+              wrap.addEventListener("mouseenter", function () {
+                wrap.style.cursor = "none";
+                if (dot) dot.style.opacity = "1";
+              });
+              wrap.addEventListener("mouseleave", function () {
+                wrap.style.cursor = "";
+                sCtx.clearRect(0, 0, cssW, cssH);
+                if (dot) dot.style.opacity = "0";
+              });
+              wrap.addEventListener("mousemove", function (e) {
+                drawSpot(e.clientX, e.clientY);
+                if (dot) {
+                  dot.style.transform = "translate(" + (e.clientX - 5) + "px," + (e.clientY - 5) + "px)";
+                }
+              });
 
-            wrap.addEventListener("mousemove", function (e) {
-              drawSpot(e.clientX, e.clientY);
-              if (dot) {
-                /* translate keeps positioning on the GPU compositor thread */
-                dot.style.transform = "translate(" + (e.clientX - 5) + "px," + (e.clientY - 5) + "px)";
+            /* ── Mobile: gyroscope or scroll-sweep fallback ───────────────── */
+            } else {
+
+              /* Lerp targets — start centred */
+              var gTgtX = 0, gTgtY = 0, gCurX = 0, gCurY = 0;
+              var gyroActive = false, gyroRafId = null;
+
+              function initGyroState() {
+                gTgtX = gCurX = cssW / 2;
+                gTgtY = gCurY = cssH / 2;
               }
-            });
+              initGyroState();
+
+              /* deviceorientation handler: maps beta/gamma → canvas coords.
+                 gamma: left-right tilt  (-35..+35 → full width)
+                 beta:  front-back tilt  (20..70° → full height, portrait hold) */
+              function onOrientation(e) {
+                if (e.gamma === null || e.beta === null) return;
+                var g = Math.max(-35, Math.min(35, e.gamma));
+                var b = Math.max(20,  Math.min(70, e.beta));
+                gTgtX = ((g + 35) / 70) * cssW;
+                gTgtY = ((b - 20) / 50) * cssH;
+              }
+
+              /* RAF loop: lerp current → target, redraw each frame */
+              function gyroLoop() {
+                if (!gyroActive) return;
+                gCurX += (gTgtX - gCurX) * 0.07;
+                gCurY += (gTgtY - gCurY) * 0.07;
+                var cr = spotCanvas.getBoundingClientRect();
+                drawSpot(cr.left + gCurX, cr.top + gCurY);
+                gyroRafId = requestAnimationFrame(gyroLoop);
+              }
+
+              function stopGyro() {
+                gyroActive = false;
+                window.removeEventListener("deviceorientation", onOrientation);
+                if (gyroRafId) { cancelAnimationFrame(gyroRafId); gyroRafId = null; }
+                sCtx.clearRect(0, 0, cssW, cssH);
+              }
+
+              function startGyro() {
+                initGyroState();
+                gyroActive = true;
+                var gotRealEvent = false;
+
+                /* Track whether events carry real data (rules out desktop browsers
+                   that fire DeviceOrientationEvent with all-null values) */
+                function firstCheck(e) {
+                  if (e.gamma !== null && e.beta !== null) {
+                    gotRealEvent = true;
+                    window.removeEventListener("deviceorientation", firstCheck);
+                  }
+                }
+                window.addEventListener("deviceorientation", firstCheck,    { passive: true });
+                window.addEventListener("deviceorientation", onOrientation, { passive: true });
+                gyroLoop();
+
+                /* 2 s timeout: if no real data arrived, fall back to sweep */
+                setTimeout(function () {
+                  if (!gotRealEvent) { stopGyro(); startSweep(); }
+                }, 2000);
+              }
+
+              /* Scroll-reveal fallback: left-to-right orange sweep, plays once
+                 after the word-reveal animation has fully settled */
+              function startSweep() {
+                var SWEEP_DUR = 1400;
+                var sweepDelay = afterStart + Math.round(WORD_DUR * 0.3) + 250;
+
+                setTimeout(function () {
+                  var t0 = null;
+
+                  function sweepFrame(ts) {
+                    if (!t0) t0 = ts;
+                    var p = Math.min((ts - t0) / SWEEP_DUR, 1);
+                    /* ease-in-out-quad */
+                    var e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+                    var cx = -SPOT_R + e * (cssW + SPOT_R * 2);
+                    var cr = spotCanvas.getBoundingClientRect();
+                    drawSpot(cr.left + cx, cr.top + cssH * 0.45);
+                    if (p < 1) {
+                      requestAnimationFrame(sweepFrame);
+                    } else {
+                      /* Hold briefly then clear back to black */
+                      setTimeout(function () { sCtx.clearRect(0, 0, cssW, cssH); }, 400);
+                    }
+                  }
+                  requestAnimationFrame(sweepFrame);
+                }, sweepDelay);
+              }
+
+              /* iOS 13+ gate: requestPermission must be called from a tap */
+              var needsPermission = (typeof DeviceOrientationEvent !== "undefined") &&
+                                    (typeof DeviceOrientationEvent.requestPermission === "function");
+              var hasOrientationAPI = typeof DeviceOrientationEvent !== "undefined";
+
+              if (!hasOrientationAPI) {
+                /* No API at all (rare) → sweep */
+                startSweep();
+
+              } else if (needsPermission) {
+                /* iOS 13+: insert a tap-to-enable prompt */
+                var tiltBtn = document.createElement("button");
+                tiltBtn.id = "tilt-prompt";
+                tiltBtn.innerHTML =
+                  '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">' +
+                  '<path d="M6 1v4l2.5 1.5" stroke="#e8440a" stroke-width="1.5" stroke-linecap="round"/>' +
+                  '<circle cx="6" cy="6" r="5" stroke="#e8440a" stroke-width="1"/></svg>' +
+                  ' Tilt to explore';
+                tiltBtn.setAttribute("aria-label", "Tap to enable the motion headline effect");
+                wrap.appendChild(tiltBtn);
+
+                tiltBtn.addEventListener("click", function () {
+                  tiltBtn.style.opacity = "0";
+                  setTimeout(function () { if (tiltBtn.parentNode) tiltBtn.remove(); }, 300);
+
+                  DeviceOrientationEvent.requestPermission()
+                    .then(function (state) {
+                      if (state === "granted") { startGyro(); }
+                      else { startSweep(); }
+                    })
+                    .catch(function () { startSweep(); });
+                }, { once: true });
+
+              } else {
+                /* Android / non-restricted environments — start immediately */
+                startGyro();
+              }
+            }
           }
         }
 
