@@ -1,621 +1,887 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Octane 99 — The Shopify Plus Agency for Emerging Brands</title>
-  <meta name="description" content="From setup to optimisation — everything you need for high-performance growth on Shopify Plus." />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Octane 99 — The Shopify Plus Agency for Emerging Brands</title>
+    <meta
+      name="description"
+      content="From setup to optimisation — everything you need for high-performance growth on Shopify Plus."
+    />
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
-          colors: {
-            accent:  '#FF4D00',
-            surface: '#F9FAFB',
-            ink:     '#0A0A0A',
-            muted:   '#6B7280',
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Inter", "system-ui", "sans-serif"] },
+            colors: {
+              accent: "#FF4D00",
+              surface: "#F9FAFB",
+              ink: "#0A0A0A",
+              muted: "#6B7280",
+            },
           },
         },
-      },
-    }
-  </script>
+      };
+    </script>
 
-  <style>
-    /* ── Design tokens ─────────────────────────────────── */
-    :root {
-      --accent:  #FF4D00;
-      --accent-h: #E63E00;
-      --border:  #E5E7EB;
-    }
+    <style>
+      /* ── Design tokens ─────────────────────────────────── */
+      :root {
+        --accent: #ff4d00;
+        --accent-h: #e63e00;
+        --border: #e5e7eb;
+      }
 
-    /* ── Base ──────────────────────────────────────────── */
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: #fff; color: #0A0A0A; }
+      /* ── Base ──────────────────────────────────────────── */
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+        background: #fff;
+        color: #0a0a0a;
+      }
 
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { transition-duration: 0.01ms !important; }
-    }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
+      }
 
-    :focus-visible { outline: 2px solid #FF4D00; outline-offset: 3px; border-radius: 4px; }
+      :focus-visible {
+        outline: 2px solid #ff4d00;
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
 
-    /* ── Navbar ────────────────────────────────────────── */
-    .site-header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-      background: transparent;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-      border-bottom: 1px solid transparent;
-      transition: background 300ms ease, border-color 300ms ease, backdrop-filter 300ms ease;
-    }
-    .site-header.nav-scrolled {
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom-color: #E5E7EB;
-    }
-    .nav-inner {
-      max-width: 72rem; margin: 0 auto; padding: 0 1.5rem;
-      height: 4rem; display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo {
-      display: flex; align-items: center;
-      text-decoration: none;
-      transition: opacity 200ms ease;
-    }
-    .nav-logo:hover { opacity: 0.65; }
-    .nav-logo img { height: 1.75rem; width: auto; display: block; }
-    .nav-right { display: flex; align-items: center; gap: 1.25rem; }
-    .nav-link {
-      font-size: 0.875rem; font-weight: 500;
-      color: #0A0A0A; text-decoration: none;
-      transition: color 200ms ease;
-    }
-    .nav-link:hover { color: #6B7280; }
+      /* ── Navbar ────────────────────────────────────────── */
+      .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-bottom: 1px solid transparent;
+        transition:
+          background 300ms ease,
+          border-color 300ms ease,
+          backdrop-filter 300ms ease;
+      }
+      .site-header.nav-scrolled {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom-color: #e5e7eb;
+      }
+      .nav-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        transition: opacity 200ms ease;
+      }
+      .nav-logo:hover {
+        opacity: 0.65;
+      }
+      .nav-logo img {
+        height: 1.75rem;
+        width: auto;
+        display: block;
+      }
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+      }
+      .nav-link {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #0a0a0a;
+        text-decoration: none;
+        transition: color 200ms ease;
+      }
+      .nav-link:hover {
+        color: #6b7280;
+      }
 
-    /* ── Pill buttons ──────────────────────────────────── */
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.25rem;
-      font-weight: 600; border-radius: 9999px; text-decoration: none;
-      cursor: pointer; border: none; transition: all 200ms ease;
-      min-height: 44px;
-    }
-    .btn-primary {
-      background: #FF4D00; color: #fff;
-      padding: 1rem 2rem; font-size: 1rem;
-    }
-    .btn-primary:hover {
-      background: #E63E00;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 20px rgba(255, 77, 0, 0.3);
-    }
-    .btn-primary-dark:hover {
-      box-shadow: 0 4px 20px rgba(255, 77, 0, 0.4);
-    }
-    .btn-nav {
-      background: #FF4D00; color: #fff;
-      padding: 0.5rem 1.25rem; font-size: 0.875rem;
-      min-height: 36px;
-    }
-    .btn-nav:hover { background: #E63E00; }
+      /* ── Pill buttons ──────────────────────────────────── */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-weight: 600;
+        border-radius: 9999px;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        transition: all 200ms ease;
+        min-height: 44px;
+      }
+      .btn-primary {
+        background: #ff4d00;
+        color: #fff;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+      }
+      .btn-primary:hover {
+        background: #e63e00;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(255, 77, 0, 0.3);
+      }
+      .btn-primary-dark:hover {
+        box-shadow: 0 4px 20px rgba(255, 77, 0, 0.4);
+      }
+      .btn-nav {
+        background: #ff4d00;
+        color: #fff;
+        padding: 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        min-height: 36px;
+      }
+      .btn-nav:hover {
+        background: #e63e00;
+      }
 
-    /* ── Section container ─────────────────────────────── */
-    .container { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; }
+      /* ── Section container ─────────────────────────────── */
+      .container {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
 
-    /* ── Section typography ────────────────────────────── */
-    .section-label {
-      display: block;
-      font-size: 0.7rem; font-weight: 600;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: #6B7280; margin-bottom: 1rem;
-    }
-    .section-heading {
-      font-size: 2.5rem; font-weight: 700;
-      letter-spacing: -0.02em; line-height: 1.15;
-      color: #0A0A0A;
-    }
-    @media (max-width: 640px) { .section-heading { font-size: 1.875rem; } }
+      /* ── Section typography ────────────────────────────── */
+      .section-label {
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin-bottom: 1rem;
+      }
+      .section-heading {
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        color: #0a0a0a;
+      }
+      @media (max-width: 640px) {
+        .section-heading {
+          font-size: 1.875rem;
+        }
+      }
 
-    /* ── Hero ──────────────────────────────────────────── */
-    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 4rem; }
-    .hero-inner { max-width: 72rem; margin: 0 auto; padding: 8rem 1.5rem; width: 100%; }
-    .hero-label-wrap { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
-    .hero-label-bar { width: 2px; height: 1.25rem; background: #FF4D00; flex-shrink: 0; }
-    .hero-headline {
-      font-size: clamp(3.5rem, 7vw, 6rem);
-      font-weight: 800; line-height: 1.05;
-      letter-spacing: -0.03em; color: #0A0A0A;
-      max-width: 56rem; margin-bottom: 1.25rem;
-    }
-    .hero-subline {
-      font-size: 1.25rem; font-weight: 600;
-      color: #FF4D00; margin-top: 1rem; line-height: 1.4;
-    }
-    .hero-copy {
-      font-size: 1rem; line-height: 1.7;
-      color: #6B7280; max-width: 36rem; margin-top: 1.5rem;
-    }
-    .hero-cta { margin-top: 2rem; }
+      /* ── Hero ──────────────────────────────────────────── */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding-top: 4rem;
+      }
+      .hero-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 8rem 1.5rem;
+        width: 100%;
+      }
+      .hero-label-wrap {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+      }
+      .hero-label-bar {
+        width: 2px;
+        height: 1.25rem;
+        background: #ff4d00;
+        flex-shrink: 0;
+      }
+      .hero-headline {
+        font-size: clamp(3.5rem, 7vw, 6rem);
+        font-weight: 800;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        color: #0a0a0a;
+        max-width: 56rem;
+        margin-bottom: 1.25rem;
+      }
+      .hero-subline {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #ff4d00;
+        margin-top: 1rem;
+        line-height: 1.4;
+      }
+      .hero-copy {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #6b7280;
+        max-width: 36rem;
+        margin-top: 1.5rem;
+      }
+      .hero-cta {
+        margin-top: 2rem;
+      }
 
-    /* ── Service cards ─────────────────────────────────── */
-    .services-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      margin-top: 3.5rem;
-    }
-    @media (min-width: 640px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+      /* ── Service cards ─────────────────────────────────── */
+      .services-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-top: 3.5rem;
+      }
+      @media (min-width: 640px) {
+        .services-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
 
-    .service-card {
-      background: #F9FAFB; border-radius: 16px;
-      padding: 2rem; border: 1px solid #E5E7EB;
-      transition: all 200ms ease; cursor: default;
-    }
-    .service-card:hover {
-      background: #fff;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-      border-color: transparent;
-      transform: translateY(-2px);
-    }
-    .service-num {
-      font-size: 0.75rem; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: #FF4D00; display: block; margin-bottom: 0.5rem;
-    }
-    .service-title {
-      font-size: 1.125rem; font-weight: 700;
-      color: #0A0A0A; margin-top: 0.5rem; line-height: 1.3;
-    }
-    .service-body {
-      font-size: 0.9rem; color: #6B7280;
-      line-height: 1.7; margin-top: 0.75rem;
-    }
+      .service-card {
+        background: #f9fafb;
+        border-radius: 16px;
+        padding: 2rem;
+        border: 1px solid #e5e7eb;
+        transition: all 200ms ease;
+        cursor: default;
+      }
+      .service-card:hover {
+        background: #fff;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        border-color: transparent;
+        transform: translateY(-2px);
+      }
+      .service-num {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #ff4d00;
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+      .service-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #0a0a0a;
+        margin-top: 0.5rem;
+        line-height: 1.3;
+      }
+      .service-body {
+        font-size: 0.9rem;
+        color: #6b7280;
+        line-height: 1.7;
+        margin-top: 0.75rem;
+      }
 
-    /* ── Brand logos ───────────────────────────────────── */
-    .logo-row {
-      display: flex; gap: 1rem;
-      overflow-x: auto; padding-bottom: 0.5rem;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .logo-row::-webkit-scrollbar { display: none; }
-    .brand-item {
-      width: 140px; height: 60px; flex-shrink: 0;
-      border-radius: 8px; border: 1px solid #E5E7EB;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 200ms ease; cursor: default;
-    }
-    .brand-item:hover { border-color: #FF4D00; }
-    .brand-item span {
-      font-size: 0.7rem; font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: #D1D5DB;
-    }
-    /* When real logos are swapped in */
-    .brand-item img {
-      filter: grayscale(100%); transition: filter 200ms ease;
-      max-height: 32px; width: auto; max-width: 110px; object-fit: contain;
-    }
-    .brand-item:hover img { filter: grayscale(0%); }
+      /* ── Brand logos ───────────────────────────────────── */
+      /* ── Logo marquee ticker ───────────────────────────── */
+      .logo-ticker-outer {
+        overflow: hidden;
+        /* Soft fade at both edges */
+        -webkit-mask-image: linear-gradient(
+          to right,
+          transparent 0%,
+          #000 10%,
+          #000 90%,
+          transparent 100%
+        );
+        mask-image: linear-gradient(
+          to right,
+          transparent 0%,
+          #000 10%,
+          #000 90%,
+          transparent 100%
+        );
+      }
+      .logo-ticker-track {
+        display: flex;
+        width: max-content;
+        animation: ticker 32s linear infinite;
+        will-change: transform;
+      }
+      /* Pause on hover so users can inspect a specific logo */
+      .logo-ticker-outer:hover .logo-ticker-track {
+        animation-play-state: paused;
+      }
+      @keyframes ticker {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+      }
+      /* Use margin-right (not gap) so every unit = item + space,
+         making -50% land exactly on the clone's first item.      */
+      .brand-item {
+        flex-shrink: 0;
+        width: 140px;
+        height: 64px;
+        margin-right: 3.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: default;
+      }
+      .brand-item img {
+        max-height: 36px;
+        width: auto;
+        max-width: 120px;
+        object-fit: contain;
+        filter: grayscale(100%);
+        opacity: 0.55;
+        transition: filter 200ms ease, opacity 200ms ease;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+      .brand-item:hover img {
+        filter: grayscale(0%);
+        opacity: 1;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .logo-ticker-track { animation: none; }
+      }
 
-    /* ── Why columns ───────────────────────────────────── */
-    .why-grid {
-      display: grid; grid-template-columns: 1fr;
-      gap: 3rem; margin-top: 3.5rem;
-    }
-    @media (min-width: 768px) { .why-grid { grid-template-columns: repeat(3, 1fr); gap: 3rem; } }
-    .why-col { border-top: 2px solid #E5E7EB; padding-top: 2rem; }
-    .why-num {
-      font-size: 4rem; font-weight: 900;
-      color: #F3F4F6; line-height: 1; margin-bottom: 0.5rem;
-      user-select: none;
-    }
-    .why-title { font-size: 1rem; font-weight: 700; color: #0A0A0A; }
-    .why-body { font-size: 0.9rem; color: #6B7280; line-height: 1.7; margin-top: 0.5rem; }
+      /* ── Why columns ───────────────────────────────────── */
+      .why-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        margin-top: 3.5rem;
+      }
+      @media (min-width: 768px) {
+        .why-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 3rem;
+        }
+      }
+      .why-col {
+        border-top: 2px solid #e5e7eb;
+        padding-top: 2rem;
+      }
+      .why-num {
+        font-size: 4rem;
+        font-weight: 900;
+        color: #f3f4f6;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+        user-select: none;
+      }
+      .why-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #0a0a0a;
+      }
+      .why-body {
+        font-size: 0.9rem;
+        color: #6b7280;
+        line-height: 1.7;
+        margin-top: 0.5rem;
+      }
 
-    /* ── Contact section ───────────────────────────────── */
-    .contact-section { background: #0A0A0A; padding: 8rem 0; }
-    .contact-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #6B7280; display: block; margin-bottom: 1.5rem; }
-    .contact-heading {
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      font-weight: 800; letter-spacing: -0.03em;
-      color: #fff; line-height: 1.05;
-      max-width: 32rem; margin-bottom: 2.5rem;
-    }
+      /* ── Contact section ───────────────────────────────── */
+      .contact-section {
+        background: #0a0a0a;
+        padding: 8rem 0;
+      }
+      .contact-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: #6b7280;
+        display: block;
+        margin-bottom: 1.5rem;
+      }
+      .contact-heading {
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: #fff;
+        line-height: 1.05;
+        max-width: 32rem;
+        margin-bottom: 2.5rem;
+      }
 
-    /* ── Footer ────────────────────────────────────────── */
-    .site-footer { background: #0A0A0A; border-top: 1px solid #1F2937; padding: 2rem 0; }
-    .footer-inner {
-      max-width: 72rem; margin: 0 auto; padding: 0 1.5rem;
-      display: flex; flex-direction: column; gap: 1rem;
-      align-items: flex-start;
-    }
-    @media (min-width: 640px) {
-      .footer-inner { flex-direction: row; align-items: center; justify-content: space-between; }
-    }
-    .footer-copy { font-size: 0.875rem; color: #6B7280; }
-    .back-to-top {
-      font-size: 0.875rem; font-weight: 500; color: #6B7280;
-      text-decoration: none; display: inline-flex; align-items: center;
-      gap: 0.25rem; transition: color 200ms ease; cursor: pointer;
-      min-height: 44px;
-    }
-    .back-to-top:hover { color: #FF4D00; }
+      /* ── Footer ────────────────────────────────────────── */
+      .site-footer {
+        background: #0a0a0a;
+        border-top: 1px solid #1f2937;
+        padding: 2rem 0;
+      }
+      .footer-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+      @media (min-width: 640px) {
+        .footer-inner {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
+      .footer-copy {
+        font-size: 0.875rem;
+        color: #6b7280;
+      }
+      .back-to-top {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #6b7280;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        transition: color 200ms ease;
+        cursor: pointer;
+        min-height: 44px;
+      }
+      .back-to-top:hover {
+        color: #ff4d00;
+      }
 
-    /* ── Scroll reveal ─────────────────────────────────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 400ms ease, transform 400ms ease;
-    }
-    .reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+      /* ── Scroll reveal ─────────────────────────────────── */
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+          opacity 400ms ease,
+          transform 400ms ease;
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
 
-    /* ── Hero word animation (clip-reveal) ─────────────── */
-    /* Outer span: clips the inner span as it slides up.
+      /* ── Hero word animation (clip-reveal) ─────────────── */
+      /* Outer span: clips the inner span as it slides up.
        vertical-align + line-height prevent the overflow:hidden
        from cutting off ascenders at large display sizes.        */
-    .hero-word-clip {
-      display: inline-block;
-      overflow: hidden;
-      vertical-align: bottom;
-      line-height: 1.15;
-    }
-    .hero-word {
-      display: inline-block;
-      transform: translateY(110%);
-      /* Spring easing: fast in, long deceleration tail.
-         Eliminates the mechanical feel of plain ease.   */
-      transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: transform;
-    }
-    .hero-word.is-visible {
-      transform: translateY(0);
-    }
-
-    /* ── Hero after-elements (subline, copy, cta) ──────── */
-    .hero-after {
-      opacity: 0;
-      transform: translateY(18px);
-      /* Ease-out-quad: decelerates naturally, no plateau */
-      transition: opacity 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                  transform 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      will-change: opacity, transform;
-    }
-    .hero-after.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ── Button press ──────────────────────────────────── */
-    .btn:active {
-      transform: scale(0.97) !important;
-      transition: transform 100ms ease !important;
-      box-shadow: none !important;
-    }
-
-    /* ── Reduced motion: reveal everything immediately ─── */
-    @media (prefers-reduced-motion: reduce) {
-      .reveal, .hero-after, .hero-word {
-        opacity: 1 !important;
-        transform: none !important;
-        transition: none !important;
+      .hero-word-clip {
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: bottom;
+        line-height: 1.15;
       }
-    }
-  </style>
-</head>
-<body>
+      .hero-word {
+        display: inline-block;
+        transform: translateY(110%);
+        /* Spring easing: fast in, long deceleration tail.
+         Eliminates the mechanical feel of plain ease.   */
+        transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: transform;
+      }
+      .hero-word.is-visible {
+        transform: translateY(0);
+      }
 
-  <!-- ════════════════════════════════════════════════════
+      /* ── Hero after-elements (subline, copy, cta) ──────── */
+      .hero-after {
+        opacity: 0;
+        transform: translateY(18px);
+        /* Ease-out-quad: decelerates naturally, no plateau */
+        transition:
+          opacity 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          transform 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        will-change: opacity, transform;
+      }
+      .hero-after.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ── Button press ──────────────────────────────────── */
+      .btn:active {
+        transform: scale(0.97) !important;
+        transition: transform 100ms ease !important;
+        box-shadow: none !important;
+      }
+
+      /* ── Reduced motion: reveal everything immediately ─── */
+      @media (prefers-reduced-motion: reduce) {
+        .reveal,
+        .hero-after,
+        .hero-word {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ════════════════════════════════════════════════════
        NAVBAR
   ════════════════════════════════════════════════════ -->
-  <header class="site-header">
-    <div class="nav-inner">
-      <a href="#" class="nav-logo" aria-label="Octane 99 — home">
-        <img src="assets/o99-logo-crop.png" alt="Octane 99" />
-      </a>
-      <nav class="nav-right" aria-label="Primary">
-        <a href="#contact" class="nav-link">Contact</a>
-        <a href="#contact" class="btn btn-nav hidden sm:inline-flex" aria-label="Let's talk">
-          Let's talk&nbsp;&rarr;
+    <header class="site-header">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo" aria-label="Octane 99 — home">
+          <img src="assets/o99-logo-crop.png" alt="Octane 99" />
         </a>
-      </nav>
-    </div>
-  </header>
+        <nav class="nav-right" aria-label="Primary">
+          <a href="#contact" class="nav-link">Contact</a>
+          <a href="#contact" class="btn btn-nav hidden sm:inline-flex" aria-label="Let's talk">
+            Let's talk&nbsp;&rarr;
+          </a>
+        </nav>
+      </div>
+    </header>
 
-  <main>
-
-    <!-- ════════════════════════════════════════════════════
+    <main>
+      <!-- ════════════════════════════════════════════════════
          HERO
     ════════════════════════════════════════════════════ -->
-    <section class="hero" aria-label="Hero">
-      <div class="hero-inner">
-        <div style="max-width: 56rem;">
+      <section class="hero" aria-label="Hero">
+        <div class="hero-inner">
+          <div style="max-width: 56rem">
+            <div class="hero-label-wrap">
+              <div class="hero-label-bar" aria-hidden="true"></div>
+              <span class="section-label" style="margin-bottom: 0">Shopify Plus Agency</span>
+            </div>
 
-          <div class="hero-label-wrap">
-            <div class="hero-label-bar" aria-hidden="true"></div>
-            <span class="section-label" style="margin-bottom:0;">Shopify Plus Agency</span>
+            <h1 class="hero-headline">The Shopify Plus agency for emerging brands.</h1>
+
+            <p class="hero-subline hero-after">Launch faster. Sell smarter. Grow stronger.</p>
+
+            <p class="hero-copy hero-after">
+              From setup to optimisation — everything you need for high-performance growth on Shopify Plus.
+            </p>
+
+            <div class="hero-cta hero-after">
+              <a href="#contact" class="btn btn-primary btn-primary-dark"> Let's work together&nbsp;&rarr; </a>
+            </div>
           </div>
-
-          <h1 class="hero-headline">
-            The Shopify Plus agency for emerging brands.
-          </h1>
-
-          <p class="hero-subline hero-after">Launch faster. Sell smarter. Grow stronger.</p>
-
-          <p class="hero-copy hero-after">
-            From setup to optimisation — everything you need for high-performance growth on Shopify Plus.
-          </p>
-
-          <div class="hero-cta hero-after">
-            <a href="#contact" class="btn btn-primary btn-primary-dark">
-              Let's work together&nbsp;&rarr;
-            </a>
-          </div>
-
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ════════════════════════════════════════════════════
+      <!-- ════════════════════════════════════════════════════
          SERVICES
     ════════════════════════════════════════════════════ -->
-    <section id="services" style="padding: 8rem 0; border-top: 1px solid #E5E7EB;" aria-labelledby="services-heading">
-      <div class="container">
+      <section id="services" style="padding: 8rem 0; border-top: 1px solid #e5e7eb" aria-labelledby="services-heading">
+        <div class="container">
+          <span class="section-label reveal" data-delay="0">Services</span>
+          <h2 id="services-heading" class="section-heading reveal" data-delay="100">We offer four main services</h2>
 
-        <span class="section-label reveal" data-delay="0">Services</span>
-        <h2 id="services-heading" class="section-heading reveal" data-delay="100">We offer four main services</h2>
+          <div class="services-grid">
+            <div class="service-card reveal" data-delay="0">
+              <span class="service-num">01</span>
+              <h3 class="service-title">Store Setup</h3>
+              <p class="service-body">
+                Custom theme setups, full store configuration, navigation, payments, shipping and policies. Homepage,
+                product and collection page design, mobile optimisation, performance tuning, and app integrations.
+              </p>
+            </div>
 
-        <div class="services-grid">
+            <div class="service-card reveal" data-delay="100">
+              <span class="service-num">02</span>
+              <h3 class="service-title">Store Audit &amp; Optimisation</h3>
+              <p class="service-body">
+                UX and performance audits, speed, SEO and conversion improvements. Product page and checkout refinement,
+                on-page SEO and metadata.
+              </p>
+            </div>
 
-          <div class="service-card reveal" data-delay="0">
-            <span class="service-num">01</span>
-            <h3 class="service-title">Store Setup</h3>
-            <p class="service-body">
-              Custom theme setups, full store configuration, navigation, payments, shipping and policies. Homepage, product and collection page design, mobile optimisation, performance tuning, and app integrations.
-            </p>
+            <div class="service-card reveal" data-delay="200">
+              <span class="service-num">03</span>
+              <h3 class="service-title">Ecommerce Strategy</h3>
+              <p class="service-body">
+                Brand goals deep dive, growth roadmap, conversion funnels and retention planning. Tool recommendations
+                and ongoing performance reviews.
+              </p>
+            </div>
+
+            <div class="service-card reveal" data-delay="300">
+              <span class="service-num">04</span>
+              <h3 class="service-title">Website Maintenance</h3>
+              <p class="service-body">
+                Monthly updates, technical fixes and proactive bug monitoring. Theme updates, app installs, emergency
+                support and regular site health checks.
+              </p>
+            </div>
           </div>
-
-          <div class="service-card reveal" data-delay="100">
-            <span class="service-num">02</span>
-            <h3 class="service-title">Store Audit &amp; Optimisation</h3>
-            <p class="service-body">
-              UX and performance audits, speed, SEO and conversion improvements. Product page and checkout refinement, on-page SEO and metadata.
-            </p>
-          </div>
-
-          <div class="service-card reveal" data-delay="200">
-            <span class="service-num">03</span>
-            <h3 class="service-title">Ecommerce Strategy</h3>
-            <p class="service-body">
-              Brand goals deep dive, growth roadmap, conversion funnels and retention planning. Tool recommendations and ongoing performance reviews.
-            </p>
-          </div>
-
-          <div class="service-card reveal" data-delay="300">
-            <span class="service-num">04</span>
-            <h3 class="service-title">Website Maintenance</h3>
-            <p class="service-body">
-              Monthly updates, technical fixes and proactive bug monitoring. Theme updates, app installs, emergency support and regular site health checks.
-            </p>
-          </div>
-
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ════════════════════════════════════════════════════
+      <!-- ════════════════════════════════════════════════════
          CLIENTS
     ════════════════════════════════════════════════════ -->
-    <section id="clients" style="padding: 8rem 0; border-top: 1px solid #E5E7EB; background: #F9FAFB;" aria-labelledby="clients-heading">
-      <div class="container">
+      <section
+        id="clients"
+        style="padding: 8rem 0; border-top: 1px solid #e5e7eb; background: #f9fafb"
+        aria-labelledby="clients-heading"
+      >
+        <div class="container">
+          <span class="section-label reveal" data-delay="0">Clients</span>
+          <h2 id="clients-heading" class="section-heading reveal" data-delay="100">Brands we work with</h2>
 
-        <span class="section-label reveal" data-delay="0">Clients</span>
-        <h2 id="clients-heading" class="section-heading reveal" data-delay="100">Brands we work with</h2>
+          <div class="logo-ticker-outer reveal" style="margin-top: 3.5rem" data-delay="200">
+            <div class="logo-ticker-track" role="list" aria-label="Client logos">
 
-        <div class="logo-row reveal" style="margin-top: 3.5rem;" data-delay="200" role="list" aria-label="Client logos">
+              <!-- Original set — visible to screen readers -->
+              <div class="brand-item" role="listitem">
+                <img src="assets/4-lyma-logo-final_avmugg.png" alt="4 Lyma" />
+              </div>
+              <div class="brand-item" role="listitem">
+                <img src="assets/Atonyx_Logo_Black.png" alt="Atonyx" />
+              </div>
+              <div class="brand-item" role="listitem">
+                <img src="assets/Over_Above_logo.png" alt="Over Above" />
+              </div>
+              <div class="brand-item" role="listitem">
+                <img src="assets/Runlimited_Logo.png" alt="Runlimited" />
+              </div>
+              <div class="brand-item" role="listitem">
+                <img src="assets/Smokey_Topaz_YB-Logo-2025.png" alt="Smokey Topaz" />
+              </div>
+              <div class="brand-item" role="listitem">
+                <img src="assets/Wit_Master_Logo_Black.png" alt="Wit Master" />
+              </div>
 
-          <div class="brand-item" role="listitem">
-            <img src="assets/4-lyma-logo-final_avmugg.png" alt="4 Lyma" />
+              <!-- Duplicate set — purely visual, hidden from assistive tech -->
+              <div class="brand-item" aria-hidden="true">
+                <img src="assets/4-lyma-logo-final_avmugg.png" alt="" />
+              </div>
+              <div class="brand-item" aria-hidden="true">
+                <img src="assets/Atonyx_Logo_Black.png" alt="" />
+              </div>
+              <div class="brand-item" aria-hidden="true">
+                <img src="assets/Over_Above_logo.png" alt="" />
+              </div>
+              <div class="brand-item" aria-hidden="true">
+                <img src="assets/Runlimited_Logo.png" alt="" />
+              </div>
+              <div class="brand-item" aria-hidden="true">
+                <img src="assets/Smokey_Topaz_YB-Logo-2025.png" alt="" />
+              </div>
+              <div class="brand-item" aria-hidden="true">
+                <img src="assets/Wit_Master_Logo_Black.png" alt="" />
+              </div>
+
+            </div>
           </div>
-
-          <div class="brand-item" role="listitem">
-            <img src="assets/Atonyx_Logo_Black.png" alt="Atonyx" />
-          </div>
-
-          <div class="brand-item" role="listitem">
-            <img src="assets/Over_Above_logo.png" alt="Over Above" />
-          </div>
-
-          <div class="brand-item" role="listitem">
-            <img src="assets/Runlimited_Logo.png" alt="Runlimited" />
-          </div>
-
-          <div class="brand-item" role="listitem">
-            <img src="assets/Smokey_Topaz_YB-Logo-2025.png" alt="Smokey Topaz" />
-          </div>
-
-          <div class="brand-item" role="listitem">
-            <img src="assets/Wit_Master_Logo_Black.png" alt="Wit Master" />
-          </div>
-
         </div>
+      </section>
 
-      </div>
-    </section>
-
-    <!-- ════════════════════════════════════════════════════
+      <!-- ════════════════════════════════════════════════════
          WHY OCTANE 99
     ════════════════════════════════════════════════════ -->
-    <section id="why" style="padding: 8rem 0; border-top: 1px solid #E5E7EB;" aria-labelledby="why-heading">
-      <div class="container">
+      <section id="why" style="padding: 8rem 0; border-top: 1px solid #e5e7eb" aria-labelledby="why-heading">
+        <div class="container">
+          <span class="section-label reveal" data-delay="0">Why Us</span>
+          <h2 id="why-heading" class="section-heading reveal" data-delay="100">Why Octane 99</h2>
 
-        <span class="section-label reveal" data-delay="0">Why Us</span>
-        <h2 id="why-heading" class="section-heading reveal" data-delay="100">Why Octane 99</h2>
+          <div class="why-grid">
+            <div class="why-col reveal" data-delay="0">
+              <div class="why-num" aria-hidden="true">01</div>
+              <h3 class="why-title">Who we are</h3>
+              <p class="why-body">
+                Nimble Shopify Plus agency for startup and scaling brands. Background in ecommerce, passion for smart
+                design and strategy. Tight crew that gets things done.
+              </p>
+            </div>
 
-        <div class="why-grid">
+            <div class="why-col reveal" data-delay="100">
+              <div class="why-num" aria-hidden="true">02</div>
+              <h3 class="why-title">What we do</h3>
+              <p class="why-body">
+                Design, build, and optimise Shopify Plus stores that actually work. Technical and strategic support to
+                grow faster and sell smarter.
+              </p>
+            </div>
 
-          <div class="why-col reveal" data-delay="0">
-            <div class="why-num" aria-hidden="true">01</div>
-            <h3 class="why-title">Who we are</h3>
-            <p class="why-body">
-              Nimble Shopify Plus agency for startup and scaling brands. Background in ecommerce, passion for smart design and strategy. Tight crew that gets things done.
-            </p>
+            <div class="why-col reveal" data-delay="200">
+              <div class="why-num" aria-hidden="true">03</div>
+              <h3 class="why-title">Why we're different</h3>
+              <p class="why-body">
+                We focus on what matters, skip the fluff, keep things personal. No layers of account managers. Close
+                collaboration, fast movement, hands-on expertise.
+              </p>
+            </div>
           </div>
-
-          <div class="why-col reveal" data-delay="100">
-            <div class="why-num" aria-hidden="true">02</div>
-            <h3 class="why-title">What we do</h3>
-            <p class="why-body">
-              Design, build, and optimise Shopify Plus stores that actually work. Technical and strategic support to grow faster and sell smarter.
-            </p>
-          </div>
-
-          <div class="why-col reveal" data-delay="200">
-            <div class="why-num" aria-hidden="true">03</div>
-            <h3 class="why-title">Why we're different</h3>
-            <p class="why-body">
-              We focus on what matters, skip the fluff, keep things personal. No layers of account managers. Close collaboration, fast movement, hands-on expertise.
-            </p>
-          </div>
-
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ════════════════════════════════════════════════════
+      <!-- ════════════════════════════════════════════════════
          CONTACT CTA
     ════════════════════════════════════════════════════ -->
-    <section id="contact" class="contact-section" aria-labelledby="contact-heading">
-      <div class="container">
-        <span class="contact-label reveal" data-delay="0">Contact</span>
-        <h2 id="contact-heading" class="contact-heading reveal" data-delay="100">Let's start building together</h2>
-        <a href="mailto:louis@octane-99.com" class="btn btn-primary btn-primary-dark reveal" data-delay="200">
-          Let's work together&nbsp;&rarr;
-        </a>
-      </div>
-    </section>
+      <section id="contact" class="contact-section" aria-labelledby="contact-heading">
+        <div class="container">
+          <span class="contact-label reveal" data-delay="0">Contact</span>
+          <h2 id="contact-heading" class="contact-heading reveal" data-delay="100">Let's start building together</h2>
+          <a href="mailto:louis@octane-99.com" class="btn btn-primary btn-primary-dark reveal" data-delay="200">
+            Let's work together&nbsp;&rarr;
+          </a>
+        </div>
+      </section>
+    </main>
 
-  </main>
-
-  <!-- ════════════════════════════════════════════════════
+    <!-- ════════════════════════════════════════════════════
        FOOTER
   ════════════════════════════════════════════════════ -->
-  <footer class="site-footer" aria-label="Footer">
-    <div class="footer-inner">
-      <p class="footer-copy">&copy; 2025 Octane 99</p>
-      <a href="#" class="back-to-top" aria-label="Back to top">
-        Back to top
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
-      </a>
-    </div>
-  </footer>
+    <footer class="site-footer" aria-label="Footer">
+      <div class="footer-inner">
+        <p class="footer-copy">&copy; 2025 Octane 99</p>
+        <a href="#" class="back-to-top" aria-label="Back to top">
+          Back to top
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="m18 15-6-6-6 6" />
+          </svg>
+        </a>
+      </div>
+    </footer>
 
-  <script>
-  (function () {
-    'use strict';
+    <script>
+      (function () {
+        "use strict";
 
-    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    /* ── 4. Navbar: transparent → frosted after 50px ─────────────────── */
-    var header = document.querySelector('.site-header');
+        /* ── 4. Navbar: transparent → frosted after 50px ─────────────────── */
+        var header = document.querySelector(".site-header");
 
-    function updateNav() {
-      if (window.scrollY > 50) {
-        header.classList.add('nav-scrolled');
-      } else {
-        header.classList.remove('nav-scrolled');
-      }
-    }
+        function updateNav() {
+          if (window.scrollY > 50) {
+            header.classList.add("nav-scrolled");
+          } else {
+            header.classList.remove("nav-scrolled");
+          }
+        }
 
-    window.addEventListener('scroll', updateNav, { passive: true });
-    updateNav(); // apply immediately in case page loads scrolled
+        window.addEventListener("scroll", updateNav, { passive: true });
+        updateNav(); // apply immediately in case page loads scrolled
 
-    /* ── Stop all motion-based JS if user prefers reduced motion ──────── */
-    /* CSS already makes .reveal and .hero-after fully visible via media   */
-    /* query, so nothing else is needed here.                              */
-    if (reducedMotion) return;
+        /* ── Stop all motion-based JS if user prefers reduced motion ──────── */
+        /* CSS already makes .reveal and .hero-after fully visible via media   */
+        /* query, so nothing else is needed here.                              */
+        if (reducedMotion) return;
 
-    /* ── 2. Hero headline: split into words and stagger in ───────────── */
-    var h1 = document.querySelector('.hero-headline');
+        /* ── 2. Hero headline: split into words and stagger in ───────────── */
+        var h1 = document.querySelector(".hero-headline");
 
-    if (h1) {
-      var words = h1.textContent.trim().split(/\s+/);
+        if (h1) {
+          var words = h1.textContent.trim().split(/\s+/);
 
-      /* Nested spans: outer (.hero-word-clip) clips via overflow:hidden,
+          /* Nested spans: outer (.hero-word-clip) clips via overflow:hidden,
          inner (.hero-word) slides up — no opacity flicker, pure motion.  */
-      h1.innerHTML = words.map(function (w) {
-        return '<span class="hero-word-clip"><span class="hero-word">' + w + '</span></span>';
-      }).join(' ');
+          h1.innerHTML = words
+            .map(function (w) {
+              return '<span class="hero-word-clip"><span class="hero-word">' + w + "</span></span>";
+            })
+            .join(" ");
 
-      var wordSpans  = h1.querySelectorAll('.hero-word');
-      var WORD_START = 80;   // ms — page feels alive almost immediately
-      var STRIDE     = 55;   // ms — tight enough to read as a wave, not discrete pops
-      var WORD_DUR   = 800;  // ms — must match CSS transition duration
+          var wordSpans = h1.querySelectorAll(".hero-word");
+          var WORD_START = 80; // ms — page feels alive almost immediately
+          var STRIDE = 55; // ms — tight enough to read as a wave, not discrete pops
+          var WORD_DUR = 800; // ms — must match CSS transition duration
 
-      wordSpans.forEach(function (span, i) {
-        setTimeout(function () {
-          span.classList.add('is-visible');
-        }, WORD_START + i * STRIDE);
-      });
+          wordSpans.forEach(function (span, i) {
+            setTimeout(
+              function () {
+                span.classList.add("is-visible");
+              },
+              WORD_START + i * STRIDE,
+            );
+          });
 
-      /* Begin after-elements while the last word is still decelerating
+          /* Begin after-elements while the last word is still decelerating
          (at ~70% through its spring curve) — creates a continuous flow
          rather than a hard stop-start between headline and sub-copy.    */
-      var afterStart = WORD_START + (wordSpans.length - 1) * STRIDE + Math.round(WORD_DUR * 0.70);
+          var afterStart = WORD_START + (wordSpans.length - 1) * STRIDE + Math.round(WORD_DUR * 0.7);
 
-      document.querySelectorAll('.hero-after').forEach(function (el, i) {
-        setTimeout(function () {
-          el.classList.add('is-visible');
-        }, afterStart + i * 110);
-      });
-    }
+          document.querySelectorAll(".hero-after").forEach(function (el, i) {
+            setTimeout(
+              function () {
+                el.classList.add("is-visible");
+              },
+              afterStart + i * 110,
+            );
+          });
+        }
 
-    /* ── 1. Scroll reveal via IntersectionObserver ───────────────────── */
-    var revealEls = document.querySelectorAll('.reveal');
+        /* ── 1. Scroll reveal via IntersectionObserver ───────────────────── */
+        var revealEls = document.querySelectorAll(".reveal");
 
-    if (!revealEls.length) return;
+        if (!revealEls.length) return;
 
-    /* Fallback: reveal immediately in browsers without IntersectionObserver */
-    if (!('IntersectionObserver' in window)) {
-      revealEls.forEach(function (el) { el.classList.add('is-visible'); });
-      return;
-    }
+        /* Fallback: reveal immediately in browsers without IntersectionObserver */
+        if (!("IntersectionObserver" in window)) {
+          revealEls.forEach(function (el) {
+            el.classList.add("is-visible");
+          });
+          return;
+        }
 
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
 
-        var el    = entry.target;
-        var delay = parseInt(el.getAttribute('data-delay') || '0', 10);
+              var el = entry.target;
+              var delay = parseInt(el.getAttribute("data-delay") || "0", 10);
 
-        /* Apply stagger delay from data-delay attribute, then reveal */
-        el.style.transitionDelay = delay + 'ms';
-        el.classList.add('is-visible');
+              /* Apply stagger delay from data-delay attribute, then reveal */
+              el.style.transitionDelay = delay + "ms";
+              el.classList.add("is-visible");
 
-        /* Clear the delay after the transition so hover/other states
+              /* Clear the delay after the transition so hover/other states
            aren't unexpectedly deferred on subsequent interactions     */
-        el.addEventListener('transitionend', function clearDelay() {
-          el.style.transitionDelay = '';
-          el.removeEventListener('transitionend', clearDelay);
-        }, { once: true });
+              el.addEventListener(
+                "transitionend",
+                function clearDelay() {
+                  el.style.transitionDelay = "";
+                  el.removeEventListener("transitionend", clearDelay);
+                },
+                { once: true },
+              );
 
-        observer.unobserve(el);
-      });
-    }, { threshold: 0.15 });
+              observer.unobserve(el);
+            });
+          },
+          { threshold: 0.15 },
+        );
 
-    revealEls.forEach(function (el) { observer.observe(el); });
-
-  }());
-  </script>
-</body>
+        revealEls.forEach(function (el) {
+          observer.observe(el);
+        });
+      })();
+    </script>
+  </body>
 </html>
