@@ -304,20 +304,8 @@
       .logo-ticker-outer {
         overflow: hidden;
         /* Soft fade at both edges */
-        -webkit-mask-image: linear-gradient(
-          to right,
-          transparent 0%,
-          #000 10%,
-          #000 90%,
-          transparent 100%
-        );
-        mask-image: linear-gradient(
-          to right,
-          transparent 0%,
-          #000 10%,
-          #000 90%,
-          transparent 100%
-        );
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
       }
       .logo-ticker-track {
         display: flex;
@@ -330,8 +318,12 @@
         animation-play-state: paused;
       }
       @keyframes ticker {
-        from { transform: translateX(0); }
-        to   { transform: translateX(-50%); }
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
       }
       /* Use margin-right (not gap) so every unit = item + space,
          making -50% land exactly on the clone's first item.      */
@@ -352,7 +344,9 @@
         object-fit: contain;
         filter: grayscale(100%);
         opacity: 0.55;
-        transition: filter 200ms ease, opacity 200ms ease;
+        transition:
+          filter 200ms ease,
+          opacity 200ms ease;
         user-select: none;
         -webkit-user-drag: none;
       }
@@ -361,7 +355,9 @@
         opacity: 1;
       }
       @media (prefers-reduced-motion: reduce) {
-        .logo-ticker-track { animation: none; }
+        .logo-ticker-track {
+          animation: none;
+        }
       }
 
       /* ── Why columns ───────────────────────────────────── */
@@ -643,7 +639,6 @@
 
           <div class="logo-ticker-outer reveal" style="margin-top: 3.5rem" data-delay="200">
             <div class="logo-ticker-track" role="list" aria-label="Client logos">
-
               <!-- Original set — visible to screen readers -->
               <div class="brand-item" role="listitem">
                 <img src="assets/4-lyma-logo-final_avmugg.png" alt="4 Lyma" />
@@ -683,7 +678,6 @@
               <div class="brand-item" aria-hidden="true">
                 <img src="assets/Wit_Master_Logo_Black.png" alt="" />
               </div>
-
             </div>
           </div>
         </div>
@@ -702,8 +696,9 @@
               <div class="why-num" aria-hidden="true">01</div>
               <h3 class="why-title">Who we are</h3>
               <p class="why-body">
-                Nimble Shopify Plus agency for startup and scaling brands. Background in ecommerce, passion for smart
-                design and strategy. Tight crew that gets things done.
+                A deliberately small Shopify Plus agency. You work directly with the people doing the work. No account
+                managers, no handoffs, no diluted attention. Just close collaboration with people who genuinely care
+                about your store.
               </p>
             </div>
 
@@ -711,8 +706,8 @@
               <div class="why-num" aria-hidden="true">02</div>
               <h3 class="why-title">What we do</h3>
               <p class="why-body">
-                Design, build, and optimise Shopify Plus stores that actually work. Technical and strategic support to
-                grow faster and sell smarter.
+                We design, build and optimise Shopify Plus stores end-to-end. From first launch to ongoing growth.
+                Technical execution and commercial strategy, handled by the same people throughout.
               </p>
             </div>
 
@@ -720,8 +715,9 @@
               <div class="why-num" aria-hidden="true">03</div>
               <h3 class="why-title">Why we're different</h3>
               <p class="why-body">
-                We focus on what matters, skip the fluff, keep things personal. No layers of account managers. Close
-                collaboration, fast movement, hands-on expertise.
+                Most agencies scale by adding layers. We stay lean on purpose. That means every client, whether you're
+                just launching or already doing serious volume, gets senior-level thinking and hands-on work, every
+                time.
               </p>
             </div>
           </div>
