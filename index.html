@@ -819,6 +819,40 @@
         box-shadow: none !important;
       }
 
+      /* ── Hero spotlight canvas ─────────────────────────── */
+      .hero-headline-wrap {
+        position: relative;
+        display: block;
+      }
+      #hero-spotlight {
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        display: block;
+      }
+      .hero-headline-wrap:hover {
+        cursor: none;
+      }
+      #cursor-dot {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 10px;
+        height: 10px;
+        background: #e8440a;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 150ms ease;
+        will-change: transform;
+      }
+      @media (hover: none) {
+        #cursor-dot { display: none; }
+        .hero-headline-wrap:hover { cursor: auto; }
+      }
+
       /* ── Reduced motion: reveal everything immediately ─── */
       @media (prefers-reduced-motion: reduce) {
         .reveal,
@@ -989,7 +1023,10 @@
               <span class="section-label" style="margin-bottom: 0">Octane 99</span>
             </div>
 
-            <h1 class="hero-headline">The ecommerce team you never have to hire.</h1>
+            <div class="hero-headline-wrap">
+              <h1 class="hero-headline">The ecommerce team you never have to hire.</h1>
+              <canvas id="hero-spotlight" aria-hidden="true"></canvas>
+            </div>
 
             <p class="hero-subline hero-after">Full coverage. Total continuity.</p>
 
@@ -1485,6 +1522,95 @@
               afterStart + i * 110,
             );
           });
+
+          /* ── Hero spotlight: reveals headline in orange under cursor ──────── */
+          var spotCanvas = document.getElementById("hero-spotlight");
+          var dot = document.getElementById("cursor-dot");
+
+          if (spotCanvas) {
+            var sCtx = spotCanvas.getContext("2d");
+            var dpr = window.devicePixelRatio || 1;
+            var SPOT_R = 160; // spotlight radius in CSS px
+            var cssW = 0, cssH = 0;
+
+            function sizeSpot() {
+              var r = h1.getBoundingClientRect();
+              cssW = r.width;
+              cssH = r.height;
+              spotCanvas.style.width = cssW + "px";
+              spotCanvas.style.height = cssH + "px";
+              spotCanvas.width = Math.round(cssW * dpr);
+              spotCanvas.height = Math.round(cssH * dpr);
+              sCtx.scale(dpr, dpr);
+            }
+            sizeSpot();
+
+            var resizeTimer;
+            window.addEventListener("resize", function () {
+              clearTimeout(resizeTimer);
+              resizeTimer = setTimeout(sizeSpot, 120);
+            }, { passive: true });
+
+            function drawSpot(mouseX, mouseY) {
+              var cr = spotCanvas.getBoundingClientRect();
+              var cx = mouseX - cr.left;
+              var cy = mouseY - cr.top;
+
+              sCtx.clearRect(0, 0, cssW, cssH);
+
+              /* Step 1: paint radial gradient as the destination */
+              var grad = sCtx.createRadialGradient(cx, cy, 0, cx, cy, SPOT_R);
+              grad.addColorStop(0,   "rgba(255,255,255,1)");
+              grad.addColorStop(0.55,"rgba(255,255,255,0.9)");
+              grad.addColorStop(1,   "rgba(255,255,255,0)");
+              sCtx.fillStyle = grad;
+              sCtx.fillRect(0, 0, cssW, cssH);
+
+              /* Step 2: draw orange text source-atop — visible only where
+                 the gradient is opaque, giving the spotlight colour effect */
+              sCtx.globalCompositeOperation = "source-atop";
+              sCtx.fillStyle = "#e8440a";
+
+              var cs = window.getComputedStyle(h1);
+              var fontSize = parseFloat(cs.fontSize);
+              sCtx.font = cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily;
+              sCtx.textBaseline = "top";
+
+              h1.querySelectorAll(".hero-word").forEach(function (span) {
+                var sr = span.getBoundingClientRect();
+                /* Remove half-leading so canvas text aligns with rendered glyphs */
+                var halfLead = (sr.height - fontSize) / 2;
+                sCtx.fillText(
+                  span.textContent,
+                  sr.left - cr.left,
+                  sr.top  - cr.top + halfLead
+                );
+              });
+
+              sCtx.globalCompositeOperation = "source-over";
+            }
+
+            var wrap = h1.closest(".hero-headline-wrap");
+
+            wrap.addEventListener("mouseenter", function () {
+              wrap.style.cursor = "none";
+              if (dot) dot.style.opacity = "1";
+            });
+
+            wrap.addEventListener("mouseleave", function () {
+              wrap.style.cursor = "";
+              sCtx.clearRect(0, 0, cssW, cssH);
+              if (dot) dot.style.opacity = "0";
+            });
+
+            wrap.addEventListener("mousemove", function (e) {
+              drawSpot(e.clientX, e.clientY);
+              if (dot) {
+                /* translate keeps positioning on the GPU compositor thread */
+                dot.style.transform = "translate(" + (e.clientX - 5) + "px," + (e.clientY - 5) + "px)";
+              }
+            });
+          }
         }
 
         /* ── 1. Scroll reveal via IntersectionObserver ───────────────────── */
@@ -1534,5 +1660,6 @@
         });
       })();
     </script>
+    <div id="cursor-dot" aria-hidden="true"></div>
   </body>
 </html>
