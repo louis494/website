@@ -1607,30 +1607,7 @@
                 }
               });
 
-            /* ── Mobile: left-to-right orange sweep on load ──────────────────── */
-            } else {
-
-              var SWEEP_DUR = 1400;
-              var sweepDelay = afterStart + Math.round(WORD_DUR * 0.3) + 250;
-
-              setTimeout(function () {
-                var t0 = null;
-
-                function sweepFrame(ts) {
-                  if (!t0) t0 = ts;
-                  var p = Math.min((ts - t0) / SWEEP_DUR, 1);
-                  var e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-                  var cx = -SPOT_R + e * (cssW + SPOT_R * 2);
-                  var cr = spotCanvas.getBoundingClientRect();
-                  drawSpot(cr.left + cx, cr.top + cssH * 0.45);
-                  if (p < 1) {
-                    requestAnimationFrame(sweepFrame);
-                  } else {
-                    setTimeout(function () { sCtx.clearRect(0, 0, cssW, cssH); }, 400);
-                  }
-                }
-                requestAnimationFrame(sweepFrame);
-              }, sweepDelay);
+            /* Mobile: no spotlight effect */
             }
           }
         }
