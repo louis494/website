@@ -852,8 +852,12 @@
         will-change: transform;
       }
       @media (hover: none) {
-        #cursor-dot { display: none; }
-        .hero-headline-wrap:hover { cursor: auto; }
+        #cursor-dot {
+          display: none;
+        }
+        .hero-headline-wrap:hover {
+          cursor: auto;
+        }
       }
 
       /* ── Reduced motion: reveal everything immediately ─── */
@@ -1054,8 +1058,8 @@
               <span class="service-num">01</span>
               <h3 class="service-title">Strategy &amp; Planning</h3>
               <p class="service-body">
-                Growth roadmap, channel strategy, conversion funnels and retention planning. We think commercially,
-                not just technically.
+                Growth roadmap, channel strategy, conversion funnels and retention planning. We think commercially, not
+                just technically.
               </p>
             </div>
 
@@ -1099,8 +1103,8 @@
               <span class="service-num">06</span>
               <h3 class="service-title">Paid Media Governance</h3>
               <p class="service-body">
-                We don't run your campaigns — we hold your team or agency accountable for the ones they run.
-                Performance audits, spend analysis and strategic oversight so nothing gets wasted.
+                We don't run your campaigns — we hold your team or agency accountable for the ones they run. Performance
+                audits, spend analysis and strategic oversight so nothing gets wasted.
               </p>
             </div>
           </div>
@@ -1253,7 +1257,7 @@
               <div class="why-num" aria-hidden="true">01</div>
               <h3 class="why-title">Who we are</h3>
               <p class="why-body">
-                A deliberately lean, full-stack ecommerce team. You work directly with the people doing the work — no
+                A deliberately lean, full-stack ecommerce team. You work directly with the people doing the work. No
                 account managers, no handoffs, no diluted attention. Just close collaboration with people who genuinely
                 care about your store's performance.
               </p>
@@ -1263,9 +1267,9 @@
               <div class="why-num" aria-hidden="true">02</div>
               <h3 class="why-title">What we do</h3>
               <p class="why-body">
-                We cover the full ecommerce operation. Strategy and planning, build and design, growth and
-                optimisation, data and reporting, CRM and retention, and paid media governance. End-to-end execution
-                and oversight, handled by the same senior team throughout.
+                We cover the full ecommerce operation. Strategy and planning, build and design, growth and optimisation,
+                data and reporting, CRM and retention, and paid media governance. End-to-end execution and oversight,
+                handled by the same senior team throughout.
               </p>
             </div>
 
@@ -1273,9 +1277,9 @@
               <div class="why-num" aria-hidden="true">03</div>
               <h3 class="why-title">Why we're different</h3>
               <p class="why-body">
-                Most agencies scale by adding layers. We stay lean on purpose. That means every client — whether
-                you're just launching or already doing serious volume — gets senior-level thinking across the full
-                ecommerce stack, every time. One team. Full coverage. Total continuity.
+                Most agencies scale by adding layers. We stay lean on purpose. That means every client, whether you're
+                just launching or already doing serious volume, gets senior-level thinking across the full ecommerce
+                stack, every time. One team. Full coverage. Total continuity.
               </p>
             </div>
           </div>
@@ -1529,8 +1533,8 @@
           /* ── Hero spotlight: CSS background-clip:text + radial gradient ──── */
           /* The browser's own font renderer clips the gradient exactly to the
              glyph outlines — no canvas text rendering, no colour bleed.      */
-          var dot      = document.getElementById("cursor-dot");
-          var wrap     = h1.closest(".hero-headline-wrap");
+          var dot = document.getElementById("cursor-dot");
+          var wrap = h1.closest(".hero-headline-wrap");
           var isMobile = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 
           if (!isMobile && wrap) {
@@ -1555,8 +1559,8 @@
                  needing background-attachment:fixed (which breaks with transforms). */
               h1.querySelectorAll(".hero-word").forEach(function (span) {
                 var sr = span.getBoundingClientRect();
-                span.style.setProperty("--spot-x", (e.clientX - sr.left) + "px");
-                span.style.setProperty("--spot-y", (e.clientY - sr.top)  + "px");
+                span.style.setProperty("--spot-x", e.clientX - sr.left + "px");
+                span.style.setProperty("--spot-y", e.clientY - sr.top + "px");
               });
               if (dot) {
                 dot.style.transform = "translate(" + (e.clientX - 5) + "px," + (e.clientY - 5) + "px)";
