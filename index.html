@@ -721,6 +721,59 @@
         margin-bottom: 2.5rem;
       }
 
+      /* ── Contact CTA: copy-to-clipboard toast ─────────────
+         Fallback for mailto: links when the device has no
+         default mail client — the address is copied and this
+         confirms it so the click never feels like a no-op.   */
+      .contact-cta-wrap {
+        position: relative;
+        display: inline-block;
+      }
+      .copy-toast {
+        position: absolute;
+        left: 50%;
+        bottom: calc(100% + 12px);
+        transform: translate(-50%, 6px);
+        width: max-content;
+        max-width: min(280px, 85vw);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        text-align: center;
+        background: #171717;
+        border: 1px solid #2a2a2a;
+        color: #fff;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        line-height: 1.4;
+        padding: 0.6rem 0.9rem;
+        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 200ms ease,
+          transform 200ms ease;
+      }
+      .copy-toast::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 5px solid transparent;
+        border-top-color: #171717;
+      }
+      .copy-toast.is-visible {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+      .copy-toast-icon {
+        flex-shrink: 0;
+        color: #ff4d00;
+      }
+
       /* ── Footer ────────────────────────────────────────── */
       .site-footer {
         background: #0a0a0a;
@@ -1383,9 +1436,12 @@
         <div class="container">
           <span class="contact-label reveal" data-delay="0">Contact</span>
           <h2 id="contact-heading" class="contact-heading reveal" data-delay="100">Let's start building together</h2>
-          <a href="mailto:louis@octane-99.com" class="btn btn-primary btn-primary-dark reveal" data-delay="200">
-            Let's work together&nbsp;&rarr;
-          </a>
+          <div class="contact-cta-wrap reveal" data-delay="200">
+            <a href="mailto:louis@octane-99.com" id="contact-mailto" class="btn btn-primary btn-primary-dark">
+              Let's work together&nbsp;&rarr;
+            </a>
+            <span id="copy-toast" class="copy-toast" role="status" aria-live="polite"></span>
+          </div>
         </div>
       </section>
     </main>
@@ -1482,6 +1538,42 @@
 
         window.addEventListener("scroll", updateNav, { passive: true });
         updateNav(); // apply immediately in case page loads scrolled
+
+        /* ── Contact mailto: copy-to-clipboard fallback ───────────────────── */
+        /* mailto: silently no-ops when the device has no default mail client
+       registered, which reads as a broken button. Copy the address as a
+       fallback and surface a toast so the click always does *something*. */
+        var mailLink = document.getElementById("contact-mailto");
+        var copyToast = document.getElementById("copy-toast");
+
+        if (mailLink && copyToast) {
+          var toastTimer;
+          var CHECK_ICON =
+            '<svg class="copy-toast-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" ' +
+            'stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ' +
+            'aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>';
+
+          mailLink.addEventListener("click", function () {
+            var email = "louis@octane-99.com";
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(email).catch(function () {});
+            }
+
+            /* Clear then re-set on the next frame so screen readers announce
+           the toast again even if the text is identical to last time.   */
+            copyToast.textContent = "";
+            window.requestAnimationFrame(function () {
+              copyToast.innerHTML = CHECK_ICON + " Copied — paste into any email app";
+              copyToast.classList.add("is-visible");
+            });
+
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(function () {
+              copyToast.classList.remove("is-visible");
+            }, 2600);
+          });
+        }
 
         /* ── Stop all motion-based JS if user prefers reduced motion ──────── */
         /* CSS already makes .reveal and .hero-after fully visible via media   */
